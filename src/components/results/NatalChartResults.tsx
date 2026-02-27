@@ -10,10 +10,10 @@ function AngleAspectSection({ title, aspects }: { title: string; aspects: Astrol
 
   return (
     <div>
-      <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">{title}</h4>
+      <h4 className="text-sm font-semibold text-[#9a7d4e] mb-2">{title}</h4>
       <div className="space-y-1 mb-3">
         {aspects.map((aspect, idx) => (
-          <p key={idx} className="text-sm text-gray-700 dark:text-gray-300">
+          <p key={idx} className="text-sm text-[#4a4560]">
             {aspect.planet_1.en} {aspect.aspect.en} {aspect.planet_2.en}
           </p>
         ))}
@@ -26,7 +26,7 @@ export function NatalChartResults({ result }: NatalChartResultsProps) {
   if (!result) {
     return (
       <ResultSection title="Natal Chart" defaultOpen={true}>
-        <p className="text-gray-600 dark:text-gray-400">No natal chart data available</p>
+        <p className="text-gray-400">No natal chart data available</p>
       </ResultSection>
     );
   }
@@ -42,47 +42,37 @@ export function NatalChartResults({ result }: NatalChartResultsProps) {
     <ResultSection title="Natal Chart" defaultOpen={true}>
       <div className="space-y-6">
         {/* Rising Sign */}
-        <div className="p-3 bg-purple-50 dark:bg-purple-900 rounded-lg">
-          <p className="text-sm font-medium text-purple-900 dark:text-purple-200">
+        <div className="p-3 bg-purple-50 border border-purple-200 rounded-lg">
+          <p className="text-sm font-medium text-purple-700">
             Ascendant (Rising Sign): <span className="font-bold text-lg">{result.risingSign}</span>
           </p>
         </div>
 
         {/* Planets */}
         <div>
-          <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-3">Planets</h3>
+          <h3 className="text-base font-semibold text-[#2d2a3e] mb-3">Planets</h3>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-200 dark:border-gray-700">
-                  <th className="text-left py-2 px-2 font-semibold text-gray-900 dark:text-white">
-                    Planet
-                  </th>
-                  <th className="text-left py-2 px-2 font-semibold text-gray-900 dark:text-white">
-                    Sign
-                  </th>
-                  <th className="text-left py-2 px-2 font-semibold text-gray-900 dark:text-white">
-                    House
-                  </th>
+                <tr className="border-b border-gray-200">
+                  <th className="text-left py-2 px-2 font-semibold text-[#9a7d4e]">Planet</th>
+                  <th className="text-left py-2 px-2 font-semibold text-[#9a7d4e]">Sign</th>
+                  <th className="text-left py-2 px-2 font-semibold text-[#9a7d4e]">House</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+              <tbody className="divide-y divide-gray-100">
                 {result.planets.map((planet, idx) => (
-                  <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-gray-800">
-                    <td className="py-2 px-2 font-medium text-gray-900 dark:text-white">
+                  <tr key={idx} className="hover:bg-gray-50">
+                    <td className="py-2 px-2 font-medium text-[#2d2a3e]">
                       {planet.planet.en}
                       {(planet.isRetro === 'True' || planet.isRetro === 'true') && (
-                        <span className="ml-1 inline-block px-1.5 py-0.5 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 text-xs rounded">
+                        <span className="ml-1 inline-block px-1.5 py-0.5 bg-red-100 text-red-700 text-xs rounded">
                           R
                         </span>
                       )}
                     </td>
-                    <td className="py-2 px-2 text-gray-700 dark:text-gray-300">
-                      {planet.zodiac_sign.name.en}
-                    </td>
-                    <td className="py-2 px-2 text-gray-700 dark:text-gray-300">
-                      {planet.house || ''}
-                    </td>
+                    <td className="py-2 px-2 text-[#4a4560]">{planet.zodiac_sign.name.en}</td>
+                    <td className="py-2 px-2 text-[#4a4560]">{planet.house || ''}</td>
                   </tr>
                 ))}
               </tbody>
@@ -93,10 +83,10 @@ export function NatalChartResults({ result }: NatalChartResultsProps) {
         {/* Planet-to-Planet Aspects */}
         {result.aspects && result.aspects.length > 0 && (
           <div>
-            <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-3">Aspects</h3>
+            <h3 className="text-base font-semibold text-[#2d2a3e] mb-3">Aspects</h3>
             <div className="space-y-1">
               {result.aspects.map((aspect, idx) => (
-                <p key={idx} className="text-sm text-gray-700 dark:text-gray-300">
+                <p key={idx} className="text-sm text-[#4a4560]">
                   {aspect.planet_1.en} {aspect.aspect.en} {aspect.planet_2.en}
                 </p>
               ))}
@@ -107,9 +97,7 @@ export function NatalChartResults({ result }: NatalChartResultsProps) {
         {/* Angle Aspects (IC, DSC, MC, ASC) */}
         {hasAngleAspects && (
           <div>
-            <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-3">
-              Angle Aspects
-            </h3>
+            <h3 className="text-base font-semibold text-[#2d2a3e] mb-3">Angle Aspects</h3>
             <div className="space-y-2">
               <AngleAspectSection title="IC Aspects" aspects={result.angleAspects.ic} />
               <AngleAspectSection title="DSC Aspects" aspects={result.angleAspects.dsc} />

@@ -20,16 +20,12 @@ export function ResultsPage() {
   if (!results) {
     return (
       <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <div className="bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-700 rounded-lg p-6">
-          <h2 className="text-lg font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
-            No Results Found
-          </h2>
-          <p className="text-yellow-800 dark:text-yellow-200 mb-4">
-            Please complete a calculation first.
-          </p>
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
+          <h2 className="text-lg font-semibold text-amber-800 mb-2">No Results Found</h2>
+          <p className="text-amber-700 mb-4">Please complete a calculation first.</p>
           <button
             onClick={() => navigate('/calculator')}
-            className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+            className="px-6 py-2 bg-[#9a7d4e] hover:bg-[#b8944a] text-white font-medium rounded-lg transition-colors"
           >
             Go to Calculator
           </button>
@@ -42,52 +38,42 @@ export function ResultsPage() {
     <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-          Pheydrus Calculation Results
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400">
+        <h1 className="text-4xl font-bold text-[#2d2a3e] mb-2">Pheydrus Calculation Results</h1>
+        <p className="text-[#6b6188]">
           Complete astrological and numerological analysis for {results.userInfo.name}
         </p>
       </div>
 
       {/* User Info Summary */}
-      <div className="mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-          Profile Summary
-        </h2>
+      <div className="mb-8 p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
+        <h2 className="text-xl font-semibold text-[#9a7d4e] mb-4">Profile Summary</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Name</p>
-            <p className="text-lg text-gray-900 dark:text-white">{results.userInfo.name}</p>
+            <p className="text-sm font-medium text-gray-400">Name</p>
+            <p className="text-lg text-[#2d2a3e]">{results.userInfo.name}</p>
           </div>
           <div>
-            <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Date of Birth</p>
-            <p className="text-lg text-gray-900 dark:text-white">{results.userInfo.dateOfBirth}</p>
+            <p className="text-sm font-medium text-gray-400">Date of Birth</p>
+            <p className="text-lg text-[#2d2a3e]">{results.userInfo.dateOfBirth}</p>
           </div>
           <div>
-            <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Birth Location</p>
-            <p className="text-lg text-gray-900 dark:text-white">
-              {results.userInfo.birthLocation}
-            </p>
+            <p className="text-sm font-medium text-gray-400">Birth Location</p>
+            <p className="text-lg text-[#2d2a3e]">{results.userInfo.birthLocation}</p>
           </div>
           <div>
-            <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Current Location</p>
-            <p className="text-lg text-gray-900 dark:text-white">
-              {results.userInfo.currentLocation}
-            </p>
+            <p className="text-sm font-medium text-gray-400">Current Location</p>
+            <p className="text-lg text-[#2d2a3e]">{results.userInfo.currentLocation}</p>
           </div>
         </div>
       </div>
 
       {/* Error Alert (if any) */}
       {results.errors && results.errors.length > 0 && (
-        <div className="mb-8 p-4 bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-lg">
-          <h3 className="font-semibold text-red-900 dark:text-red-100 mb-2">
-            Calculation Warnings
-          </h3>
+        <div className="mb-8 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <h3 className="font-semibold text-red-700 mb-2">Calculation Warnings</h3>
           <ul className="space-y-1">
             {results.errors.map((error, idx) => (
-              <li key={idx} className="text-red-800 dark:text-red-200 text-sm">
+              <li key={idx} className="text-red-600 text-sm">
                 <span className="font-medium">{error.calculatorName}:</span> {error.errorMessage}
               </li>
             ))}
@@ -96,7 +82,7 @@ export function ResultsPage() {
       )}
 
       {/* Results Sections */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 space-y-0 mb-8">
+      <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-8 space-y-0 mb-8">
         <TransitsResults result={results.calculators.transits} />
         <NatalChartResults result={results.calculators.natalChart} />
         <LifePathResults result={results.calculators.lifePath} />
@@ -114,7 +100,7 @@ export function ResultsPage() {
       </div>
 
       {/* Report Timestamp */}
-      <div className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
+      <div className="mt-8 text-center text-sm text-gray-400">
         <p>Report generated: {new Date(results.timestamp).toLocaleString()}</p>
       </div>
     </div>

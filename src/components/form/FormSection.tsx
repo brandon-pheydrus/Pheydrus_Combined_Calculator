@@ -15,17 +15,21 @@ export function FormSection({ title, children, defaultOpen = true }: FormSection
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="border border-gray-300 rounded-lg overflow-hidden mb-6 dark:border-gray-600">
+    <div className="border border-gray-200 rounded-lg overflow-hidden mb-6">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-left font-semibold text-gray-900 dark:text-white transition-colors flex justify-between items-center"
+        className="w-full px-4 py-3 bg-gray-50 hover:bg-gray-100 text-left font-semibold text-[#2d2a3e] transition-colors flex justify-between items-center"
       >
         {title}
-        <span className={`transform transition-transform ${isOpen ? 'rotate-180' : ''}`}>▼</span>
+        <span
+          className={`transform transition-transform text-[#9b95ad] ${isOpen ? 'rotate-180' : ''}`}
+        >
+          &#x25BC;
+        </span>
       </button>
 
-      {isOpen && <div className="p-4 bg-white dark:bg-gray-800">{children}</div>}
+      {isOpen && <div className="p-4 bg-white">{children}</div>}
     </div>
   );
 }

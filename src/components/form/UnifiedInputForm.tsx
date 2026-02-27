@@ -29,35 +29,39 @@ export function UnifiedInputForm({ onSubmit, isLoading = false }: UnifiedInputFo
 
   const loading = isLoading || isLoadingForm;
 
+  const inputClass =
+    'w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-[#2d2a3e] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#9a7d4e]/40 focus:border-[#9a7d4e]';
+  const inputErrorClass =
+    'w-full px-3 py-2 border border-red-400 rounded-lg bg-white text-[#2d2a3e] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#9a7d4e]/40 focus:border-[#9a7d4e]';
+  const labelClass = 'block text-sm font-medium text-[#4a4560] mb-1';
+
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
       {/* Personal Info Section */}
       <FormSection title="Personal Information">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Name <span className="text-gray-500">(optional)</span>
+            <label className={labelClass}>
+              Name <span className="text-gray-400">(optional)</span>
             </label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => setField('name', e.target.value)}
               placeholder="Your name"
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Date of Birth <span className="text-red-500">*</span>
+            <label className={labelClass}>
+              Date of Birth <span className="text-[#9a7d4e]">*</span>
             </label>
             <input
               type="date"
               value={formData.dateOfBirth}
               onChange={(e) => setField('dateOfBirth', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.dateOfBirth ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={errors.dateOfBirth ? inputErrorClass : inputClass}
             />
             {errors.dateOfBirth && (
               <p className="text-red-500 text-sm mt-1">{errors.dateOfBirth}</p>
@@ -65,16 +69,14 @@ export function UnifiedInputForm({ onSubmit, isLoading = false }: UnifiedInputFo
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Time of Birth <span className="text-red-500">*</span>
+            <label className={labelClass}>
+              Time of Birth <span className="text-[#9a7d4e]">*</span>
             </label>
             <input
               type="time"
               value={formData.timeOfBirth}
               onChange={(e) => setField('timeOfBirth', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.timeOfBirth ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={errors.timeOfBirth ? inputErrorClass : inputClass}
             />
             {errors.timeOfBirth && (
               <p className="text-red-500 text-sm mt-1">{errors.timeOfBirth}</p>
@@ -87,8 +89,8 @@ export function UnifiedInputForm({ onSubmit, isLoading = false }: UnifiedInputFo
       <FormSection title="Location">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Birth City <span className="text-red-500">*</span>
+            <label className={labelClass}>
+              Birth City <span className="text-[#9a7d4e]">*</span>
             </label>
             <CityAutocomplete
               value={formData.birthLocation}
@@ -100,8 +102,8 @@ export function UnifiedInputForm({ onSubmit, isLoading = false }: UnifiedInputFo
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Current City <span className="text-red-500">*</span>
+            <label className={labelClass}>
+              Current City <span className="text-[#9a7d4e]">*</span>
             </label>
             <CityAutocomplete
               value={formData.currentLocation}
@@ -113,13 +115,13 @@ export function UnifiedInputForm({ onSubmit, isLoading = false }: UnifiedInputFo
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Rising Sign <span className="text-gray-500">(optional)</span>
+            <label className={labelClass}>
+              Rising Sign <span className="text-gray-400">(optional)</span>
             </label>
             <select
               value={formData.risingSign}
               onChange={(e) => setField('risingSign', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={inputClass}
             >
               <option value="">Select zodiac sign...</option>
               {ZODIAC_SIGNS_OPTIONS.map((sign) => (
@@ -136,60 +138,60 @@ export function UnifiedInputForm({ onSubmit, isLoading = false }: UnifiedInputFo
       <FormSection title="Address Numerology">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Unit Number <span className="text-gray-500">(optional)</span>
+            <label className={labelClass}>
+              Unit Number <span className="text-gray-400">(optional)</span>
             </label>
             <input
               type="text"
               value={formData.l1}
               onChange={(e) => setField('l1', e.target.value)}
               placeholder="e.g., 5B, Unit 202"
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Building/House Number <span className="text-gray-500">(optional)</span>
+            <label className={labelClass}>
+              Building/House Number <span className="text-gray-400">(optional)</span>
             </label>
             <input
               type="text"
               value={formData.streetNumber}
               onChange={(e) => setField('streetNumber', e.target.value)}
               placeholder="e.g., 14952"
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Street Name <span className="text-gray-500">(optional)</span>
+            <label className={labelClass}>
+              Street Name <span className="text-gray-400">(optional)</span>
             </label>
             <input
               type="text"
               value={formData.l2}
               onChange={(e) => setField('l2', e.target.value)}
               placeholder="e.g., Oak Street, 5th Avenue"
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Postal Code <span className="text-gray-500">(optional)</span>
+            <label className={labelClass}>
+              Postal Code <span className="text-gray-400">(optional)</span>
             </label>
             <input
               type="text"
               value={formData.postalCode}
               onChange={(e) => setField('postalCode', e.target.value)}
               placeholder="e.g., 10001"
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Home Built Year <span className="text-gray-500">(optional)</span>
+            <label className={labelClass}>
+              Home Built Year <span className="text-gray-400">(optional)</span>
             </label>
             <input
               type="text"
@@ -197,9 +199,7 @@ export function UnifiedInputForm({ onSubmit, isLoading = false }: UnifiedInputFo
               onChange={(e) => setField('homeBuiltYear', e.target.value)}
               placeholder="e.g., 1990"
               maxLength={4}
-              className={`w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.homeBuiltYear ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={errors.homeBuiltYear ? inputErrorClass : inputClass}
             />
             {errors.homeBuiltYear && (
               <p className="text-red-500 text-sm mt-1">{errors.homeBuiltYear}</p>
@@ -213,7 +213,7 @@ export function UnifiedInputForm({ onSubmit, isLoading = false }: UnifiedInputFo
         <button
           type="submit"
           disabled={loading}
-          className="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold rounded-lg transition-colors"
+          className="flex-1 px-6 py-3 bg-[#9a7d4e] hover:bg-[#b8944a] disabled:opacity-50 text-white font-semibold rounded-lg transition-colors uppercase tracking-wider"
         >
           {loading ? 'Calculating...' : 'Calculate'}
         </button>
@@ -222,15 +222,15 @@ export function UnifiedInputForm({ onSubmit, isLoading = false }: UnifiedInputFo
           type="button"
           onClick={resetForm}
           disabled={loading}
-          className="px-6 py-3 bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 disabled:bg-gray-400 text-gray-900 dark:text-white font-semibold rounded-lg transition-colors"
+          className="px-6 py-3 border border-gray-300 hover:border-[#9a7d4e] hover:text-[#9a7d4e] disabled:opacity-50 text-[#6b6188] font-semibold rounded-lg transition-colors"
         >
           Reset
         </button>
       </div>
 
       {/* Required fields note */}
-      <p className="text-sm text-gray-500 dark:text-gray-400">
-        <span className="text-red-500">*</span> Required fields
+      <p className="text-sm text-gray-400">
+        <span className="text-[#9a7d4e]">*</span> Required fields
       </p>
     </form>
   );

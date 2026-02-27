@@ -32,10 +32,10 @@ export function ExportButton({ results, variant = 'button' }: ExportButtonProps)
         onClick={handleExport}
         disabled={isExporting}
         title={isExporting ? 'Exporting...' : 'Export to PDF'}
-        className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors disabled:opacity-50"
+        className="p-2 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
       >
         <svg
-          className="w-5 h-5 text-gray-900 dark:text-white"
+          className="w-5 h-5 text-[#6b6188]"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -56,13 +56,13 @@ export function ExportButton({ results, variant = 'button' }: ExportButtonProps)
       <button
         onClick={handleExport}
         disabled={isExporting}
-        className="px-6 py-2 bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white font-medium rounded-lg transition-colors"
+        className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-medium rounded-lg transition-colors"
       >
         {isExporting ? 'Exporting PDF...' : 'Export to PDF'}
       </button>
       {error && (
-        <div className="mt-2 p-3 bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-lg">
-          <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
+        <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-sm text-red-600">{error}</p>
         </div>
       )}
     </div>

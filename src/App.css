@@ -7,8 +7,8 @@
 
 /* Header & Navigation */
 .app-header {
-  background: #1a1a2e;
-  border-bottom: 1px solid #333;
+  background: #fff;
+  border-bottom: 1px solid #e8e4f0;
 }
 
 .nav-bar {
@@ -23,8 +23,10 @@
 .nav-brand a {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color: #9a7d4e;
   text-decoration: none;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .nav-links {
@@ -36,7 +38,7 @@
 }
 
 .nav-links a {
-  color: #aaa;
+  color: #6b6188;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s;
@@ -44,7 +46,7 @@
 
 .nav-links a:hover,
 .nav-links a.active {
-  color: #646cff;
+  color: #9a7d4e;
 }
 
 /* Main Content */
@@ -59,11 +61,11 @@
 
 /* Footer */
 .app-footer {
-  background: #1a1a2e;
-  border-top: 1px solid #333;
+  background: #fff;
+  border-top: 1px solid #e8e4f0;
   padding: 1rem 2rem;
   text-align: center;
-  color: #888;
+  color: #9b95ad;
 }
 
 /* Page Styles */
@@ -73,10 +75,11 @@
 
 .page h1 {
   margin-bottom: 0.5rem;
+  color: #2d2a3e;
 }
 
 .subtitle {
-  color: #888;
+  color: #6b6188;
   font-size: 1.2rem;
   margin-bottom: 3rem;
 }
@@ -90,7 +93,8 @@
 }
 
 .feature-card {
-  background: #1a1a2e;
+  background: #fff;
+  border: 1px solid #e8e4f0;
   border-radius: 8px;
   padding: 2rem;
   text-align: left;
@@ -98,27 +102,30 @@
 
 .feature-card h3 {
   margin-top: 0;
-  color: #646cff;
+  color: #9a7d4e;
 }
 
 .feature-card p {
-  color: #aaa;
+  color: #6b6188;
   margin-bottom: 0;
 }
 
 .cta-button {
   display: inline-block;
-  background: #646cff;
+  background: #9a7d4e;
   color: #fff;
   padding: 1rem 2rem;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   transition: background 0.2s;
 }
 
 .cta-button:hover {
-  background: #535bf2;
+  background: #b8944a;
+  color: #fff;
 }
 
 /* Calculator Page */
@@ -139,7 +146,8 @@
 
 .input-section,
 .results-section {
-  background: #1a1a2e;
+  background: #fff;
+  border: 1px solid #e8e4f0;
   border-radius: 8px;
   padding: 1.5rem;
 }
@@ -148,8 +156,8 @@
 .results-section h2 {
   margin-top: 0;
   font-size: 1.2rem;
-  color: #646cff;
-  border-bottom: 1px solid #333;
+  color: #9a7d4e;
+  border-bottom: 1px solid #e8e4f0;
   padding-bottom: 0.5rem;
 }
 
@@ -160,24 +168,24 @@
 .input-group label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #aaa;
+  color: #6b6188;
   font-size: 0.9rem;
 }
 
 .input-group input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #333;
+  border: 1px solid #d8d3e6;
   border-radius: 4px;
-  background: #16162a;
-  color: #fff;
+  background: #fff;
+  color: #2d2a3e;
   font-size: 1rem;
   box-sizing: border-box;
 }
 
 .input-group input:focus {
   outline: none;
-  border-color: #646cff;
+  border-color: #9a7d4e;
 }
 
 .button-group {
@@ -198,13 +206,13 @@
 }
 
 .primary-button {
-  background: #646cff;
+  background: #9a7d4e;
   color: #fff;
   border: none;
 }
 
 .primary-button:hover:not(:disabled) {
-  background: #535bf2;
+  background: #b8944a;
 }
 
 .primary-button:disabled {
@@ -214,16 +222,16 @@
 
 .secondary-button {
   background: transparent;
-  color: #646cff;
-  border: 1px solid #646cff;
+  color: #9a7d4e;
+  border: 1px solid #9a7d4e;
 }
 
 .secondary-button:hover {
-  background: rgba(100, 108, 255, 0.1);
+  background: rgba(154, 125, 78, 0.06);
 }
 
 .error-message {
-  color: #ff6b6b;
+  color: #d94444;
   margin-top: 1rem;
   font-size: 0.9rem;
 }
@@ -238,7 +246,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0.75rem 0;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid #e8e4f0;
 }
 
 .result-item:last-child {
@@ -246,15 +254,15 @@
 }
 
 .result-label {
-  color: #aaa;
+  color: #6b6188;
 }
 
 .result-value {
   font-weight: 600;
-  color: #fff;
+  color: #2d2a3e;
 }
 
 .no-results {
-  color: #666;
+  color: #9b95ad;
   font-style: italic;
 }

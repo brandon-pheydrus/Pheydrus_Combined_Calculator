@@ -4,12 +4,12 @@ export function HomePage() {
   return (
     <div className="page home-page">
       <h1>Pheydrus Calculator</h1>
-      <p className="subtitle">Professional calculation tools for your needs</p>
+      <p className="subtitle">Break life patterns for good.</p>
 
       <div className="features">
         <div className="feature-card">
           <h3>Accurate Calculations</h3>
-          <p>Industry-standard formulas and precise results</p>
+          <p>Swiss Ephemeris-powered astrology and Chaldean numerology</p>
         </div>
         <div className="feature-card">
           <h3>Easy to Use</h3>
@@ -22,7 +22,7 @@ export function HomePage() {
       </div>
 
       <Link to="/calculator" className="cta-button">
-        Go to Calculator
+        Enter
       </Link>
     </div>
   );
