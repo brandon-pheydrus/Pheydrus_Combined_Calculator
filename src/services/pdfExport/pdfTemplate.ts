@@ -1,4 +1,101 @@
 import type { ConsolidatedResults, AstrologyAspect } from '../../models';
+import type { AngularDiagnosticResult, GradeItem, FinalGrade } from '../../models/diagnostic';
+
+const GRADE_COLORS: Record<FinalGrade, { bg: string; border: string; text: string }> = {
+  A: { bg: '#ecfdf5', border: '#34d399', text: '#065f46' },
+  B: { bg: '#eff6ff', border: '#60a5fa', text: '#1e40af' },
+  D: { bg: '#fffbeb', border: '#fbbf24', text: '#92400e' },
+  F: { bg: '#fef2f2', border: '#f87171', text: '#991b1b' },
+};
+
+function getGradeItemBg(grade: GradeItem['grade']): string {
+  if (grade === 'F') return 'background: #fef2f2; border-left: 4px solid #f87171;';
+  if (grade === 'A') return 'background: #ecfdf5; border-left: 4px solid #34d399;';
+  return 'background: #f9fafb; border-left: 4px solid #d1d5db;';
+}
+
+function getGradeBadgeStyle(grade: GradeItem['grade']): string {
+  if (grade === 'F') return 'background: #fee2e2; color: #991b1b;';
+  if (grade === 'A') return 'background: #d1fae5; color: #065f46;';
+  return 'background: #f3f4f6; color: #6b7280;';
+}
+
+function renderDiagnosticSection(diagnostic: AngularDiagnosticResult): string {
+  const gc = GRADE_COLORS[diagnostic.finalGrade];
+
+  return `
+  <div class="section" style="border: 2px solid ${gc.border}; border-radius: 8px; overflow: hidden;">
+    <!-- Header -->
+    <div style="background: ${gc.bg}; padding: 15px 20px; border-bottom: 2px solid ${gc.border};">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h2 style="margin: 0; border: none; padding: 0;">Angular Diagnostic</h2>
+          <p style="margin: 4px 0 0; color: #666; font-size: 12px;">The Three Pillars Model — Structure, Timing, Environment</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <div style="text-align: center;">
+            <div style="font-size: 11px; color: #666;">Total F's</div>
+            <div style="font-size: 22px; font-weight: bold; color: #dc2626;">${diagnostic.totalFs}</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 11px; color: #666;">Total A's</div>
+            <div style="font-size: 22px; font-weight: bold; color: #059669;">${diagnostic.totalAs}</div>
+          </div>
+          <div style="width: 60px; height: 60px; border: 3px solid ${gc.border}; border-radius: 8px; background: ${gc.bg}; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <span style="font-size: 28px; font-weight: 900; color: ${gc.text};">${diagnostic.finalGrade}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pillars -->
+    <div style="padding: 15px 20px;">
+      ${diagnostic.pillars
+        .map(
+          (pillar) => `
+      <div style="margin-bottom: 15px; border: 1px solid #e5e7eb; border-radius: 6px; overflow: hidden;">
+        <div style="background: #f9fafb; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <strong style="color: #1f2937;">Pillar ${pillar.pillar}: ${pillar.name}</strong>
+            <span style="color: #6b7280; font-size: 12px; margin-left: 8px;">${escapeHtml(pillar.description)}</span>
+          </div>
+          <div>
+            ${pillar.fCount > 0 ? `<span class="badge badge-malefic">${pillar.fCount} F${pillar.fCount !== 1 ? "'s" : ''}</span>` : ''}
+            ${pillar.aCount > 0 ? `<span class="badge badge-benefic">${pillar.aCount} A${pillar.aCount !== 1 ? "'s" : ''}</span>` : ''}
+          </div>
+        </div>
+        ${
+          pillar.items.length > 0
+            ? `<div style="padding: 10px 15px;">
+          ${pillar.items
+            .map(
+              (item) => `
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; margin: 4px 0; border-radius: 4px; ${getGradeItemBg(item.grade)}">
+            <div>
+              <strong style="font-size: 13px; color: #1f2937;">${escapeHtml(item.source)}</strong>
+              <div style="font-size: 11px; color: #6b7280;">${escapeHtml(item.reason)}</div>
+            </div>
+            <span style="padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 700; ${getGradeBadgeStyle(item.grade)}">${item.grade === 'Neutral' ? '—' : item.grade}</span>
+          </div>
+          `
+            )
+            .join('')}
+        </div>`
+            : '<p style="padding: 10px 15px; color: #9ca3af; font-style: italic; margin: 0;">No data available for this pillar</p>'
+        }
+      </div>
+      `
+        )
+        .join('')}
+    </div>
+
+    <!-- Grade scale -->
+    <div style="background: #f9fafb; padding: 8px 20px; border-top: 1px solid #e5e7eb; font-size: 11px; color: #6b7280;">
+      <strong>Grade Scale:</strong> A = 0-2 F's &nbsp; B = 3-6 F's &nbsp; D = 7-9 F's &nbsp; F = 10+ F's &nbsp;&nbsp; <em>A's do not offset F's</em>
+    </div>
+  </div>
+  `;
+}
 
 /**
  * Render an angle aspect section for the PDF
@@ -91,6 +188,9 @@ export function generatePDFTemplate(results: ConsolidatedResults): string {
       </div>
     </div>
   </div>
+
+  <!-- Angular Diagnostic -->
+  ${results.diagnostic ? renderDiagnosticSection(results.diagnostic) : ''}
 
   <!-- Transits -->
   ${

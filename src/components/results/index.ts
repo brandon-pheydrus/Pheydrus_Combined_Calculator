@@ -1,4 +1,5 @@
 export { ResultSection } from './ResultSection';
+export { AngularDiagnosticResults } from './AngularDiagnosticResults';
 export { TransitsResults } from './TransitsResults';
 export { NatalChartResults } from './NatalChartResults';
 export { LifePathResults } from './LifePathResults';

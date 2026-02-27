@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useResultsController } from '../controllers/useResultsController';
 import { NavigationButtons } from '../components/results/NavigationButtons';
+import { AngularDiagnosticResults } from '../components/results/AngularDiagnosticResults';
 import { TransitsResults } from '../components/results/TransitsResults';
 import { NatalChartResults } from '../components/results/NatalChartResults';
 import { LifePathResults } from '../components/results/LifePathResults';
@@ -80,6 +81,9 @@ export function ResultsPage() {
           </ul>
         </div>
       )}
+
+      {/* Angular Diagnostic Report Card */}
+      <AngularDiagnosticResults result={results.diagnostic} />
 
       {/* Results Sections */}
       <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-8 space-y-0 mb-8">

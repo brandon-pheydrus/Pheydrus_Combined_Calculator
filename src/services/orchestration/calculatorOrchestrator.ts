@@ -24,6 +24,7 @@ import {
   mapToAddressNumerologyInput,
 } from './inputMapper';
 import { consolidateResults, createErrorResult } from './resultConsolidator';
+import { runAngularDiagnostic } from '../diagnostic';
 
 const ORCHESTRATOR_TIMEOUT = 10000; // 10 seconds
 
@@ -97,7 +98,7 @@ export async function runAllCalculators(formData: FormData): Promise<Consolidate
       addressNumerologyResult,
     ] = results;
 
-    return consolidateResults(
+    const consolidated = consolidateResults(
       formData,
       transitsResult,
       natalChartResult,
@@ -105,6 +106,16 @@ export async function runAllCalculators(formData: FormData): Promise<Consolidate
       relocationResult,
       addressNumerologyResult
     );
+
+    // Run Angular Diagnostic after all calculators complete (non-blocking)
+    try {
+      const diagnostic = await runAngularDiagnostic(consolidated, formData);
+      consolidated.diagnostic = diagnostic;
+    } catch (e) {
+      console.warn('Angular diagnostic failed:', e);
+    }
+
+    return consolidated;
   } catch (error) {
     const err = error instanceof Error ? error : new Error('Unknown error');
     return createErrorResult(formData, err);

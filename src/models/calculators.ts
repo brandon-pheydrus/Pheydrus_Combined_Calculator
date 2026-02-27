@@ -193,6 +193,12 @@ export interface AddressNumerologyResult {
 }
 
 // ============================================================================
+// ANGULAR DIAGNOSTIC
+// ============================================================================
+
+export type { AngularDiagnosticResult } from './diagnostic';
+
+// ============================================================================
 // CONSOLIDATED ORCHESTRATOR OUTPUT
 // ============================================================================
 
@@ -220,6 +226,7 @@ export interface ConsolidatedResults {
     relocation: RelocationResult | null;
     addressNumerology: AddressNumerologyResult | null;
   };
+  diagnostic?: import('./diagnostic').AngularDiagnosticResult;
   errors?: CalculatorError[];
 }
 

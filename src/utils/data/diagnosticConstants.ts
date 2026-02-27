@@ -1,0 +1,57 @@
+/**
+ * Angular Diagnostic Constants
+ * Planet classifications, angular houses, and grading thresholds
+ *
+ * OWNER OVERRIDE: These classifications take precedence over the source PDFs.
+ * - Mars is malefic in Pillars 1 and 3
+ * - Neptune is malefic in all 3 Pillars
+ * - Jupiter is benefic in all 3 Pillars
+ * - Sun is benefic in all 3 Pillars
+ */
+
+// Pheydrus Angular Houses (NOT traditional {1,4,7,10})
+export const PHEYDRUS_ANGULAR_HOUSES = new Set([1, 5, 7, 10, 11]);
+
+// ---------------------------------------------------------------------------
+// Pillar 1 — STRUCTURE (Natal)
+// ---------------------------------------------------------------------------
+export const PILLAR_1_MALEFICS = new Set(['Pluto', 'Saturn', 'Uranus', 'Mars', 'Neptune']);
+export const PILLAR_1_BENEFICS = new Set(['Sun', 'Moon', 'Venus', 'Jupiter']);
+
+// ---------------------------------------------------------------------------
+// Pillar 2 — TIMING (Transits)
+// ---------------------------------------------------------------------------
+export const PILLAR_2_MALEFICS = new Set(['Neptune', 'Pluto', 'Saturn', 'Uranus']);
+// Benefics captured but NOT scored (short duration)
+export const PILLAR_2_BENEFICS = new Set(['Sun', 'Moon', 'Venus', 'Jupiter']);
+
+// ---------------------------------------------------------------------------
+// Pillar 3 — ENVIRONMENT (Relocation)
+// ---------------------------------------------------------------------------
+export const PILLAR_3_MALEFICS = new Set(['Neptune', 'Pluto', 'Saturn', 'Uranus', 'Mars']);
+export const PILLAR_3_BENEFICS = new Set(['Sun', 'Moon', 'Venus', 'Jupiter']);
+
+// ---------------------------------------------------------------------------
+// Life Cycle grading
+// ---------------------------------------------------------------------------
+export const LIFE_CYCLE_F_YEARS = new Set([1, 4, 9]);
+export const LIFE_CYCLE_A_YEARS = new Set([5]);
+
+// ---------------------------------------------------------------------------
+// Address grading
+// ---------------------------------------------------------------------------
+export const ADDRESS_F_NUMBERS = new Set([3, 6, 8, 9]);
+export const ADDRESS_A_NUMBERS = new Set([2, 7]);
+
+// Address level names to grade (from address calculator output)
+export const ADDRESS_GRADED_LEVELS = ['Unit Number', 'Street Name'] as const;
+
+// ---------------------------------------------------------------------------
+// Final grade thresholds
+// ---------------------------------------------------------------------------
+export function computeFinalGrade(totalFs: number): 'A' | 'B' | 'D' | 'F' {
+  if (totalFs >= 10) return 'F';
+  if (totalFs >= 7) return 'D';
+  if (totalFs >= 3) return 'B';
+  return 'A';
+}
