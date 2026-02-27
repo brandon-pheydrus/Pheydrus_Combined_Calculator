@@ -3,12 +3,8 @@
  * Handles timezone conversions and Julian Day calculations
  */
 
-import '@js-temporal/polyfill';
+import { Temporal } from '@js-temporal/polyfill';
 import type { JulianDay } from './types';
-
-// Temporal is injected into globalThis by the polyfill
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-declare const Temporal: any;
 
 const JD_AT_UNIX_EPOCH = 2440587.5;
 const MS_PER_DAY = 86400000;
@@ -38,8 +34,7 @@ export function birthLocalToUtcDate({ date, time, timeZone }: BirthDateTimeInput
   const second = 0;
 
   // Create Plain DateTime (no timezone)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const plainDt = (Temporal as any).PlainDateTime.from({
+  const plainDt = Temporal.PlainDateTime.from({
     year,
     month,
     day,
@@ -49,8 +44,7 @@ export function birthLocalToUtcDate({ date, time, timeZone }: BirthDateTimeInput
   });
 
   // Create ZonedDateTime with specified timezone
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const zdt = (Temporal as any).ZonedDateTime.from({
+  const zdt = Temporal.ZonedDateTime.from({
     timeZone,
     year: plainDt.year,
     month: plainDt.month,
