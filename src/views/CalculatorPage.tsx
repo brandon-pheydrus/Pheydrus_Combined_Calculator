@@ -1,66 +1,35 @@
 import { useCalculatorController } from '../controllers';
+import { UnifiedInputForm } from '../components/form';
+import type { FormData } from '../models/form';
 
 export function CalculatorPage() {
-  const { inputs, results, isLoading, error, updateInput, calculate, reset } =
-    useCalculatorController();
+  const { calculate, isLoading, error } = useCalculatorController();
+
+  const handleFormSubmit = async (formData: FormData) => {
+    await calculate(formData);
+  };
 
   return (
-    <div className="page calculator-page">
-      <h1>Calculator</h1>
+    <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+          Pheydrus Combined Calculator
+        </h1>
+        <p className="text-gray-600 dark:text-gray-400">
+          Calculate your birth chart, transits, life path, relocation, and address numerology in one
+          place.
+        </p>
+      </div>
 
-      <div className="calculator-container">
-        <div className="input-section">
-          <h2>Inputs</h2>
-          <div className="input-group">
-            <label htmlFor="value1">Value 1</label>
-            <input
-              id="value1"
-              type="number"
-              value={inputs.value1 ?? ''}
-              onChange={(e) => updateInput('value1', e.target.value)}
-              placeholder="Enter value"
-            />
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-lg">
+            <p className="text-red-800 dark:text-red-200 font-semibold mb-2">Calculation Error</p>
+            <p className="text-red-700 dark:text-red-300 text-sm whitespace-pre-wrap">{error}</p>
           </div>
-          <div className="input-group">
-            <label htmlFor="value2">Value 2</label>
-            <input
-              id="value2"
-              type="number"
-              value={inputs.value2 ?? ''}
-              onChange={(e) => updateInput('value2', e.target.value)}
-              placeholder="Enter value"
-            />
-          </div>
+        )}
 
-          <div className="button-group">
-            <button onClick={calculate} disabled={isLoading} className="primary-button">
-              {isLoading ? 'Calculating...' : 'Calculate'}
-            </button>
-            <button onClick={reset} className="secondary-button">
-              Reset
-            </button>
-          </div>
-
-          {error && <p className="error-message">{error}</p>}
-        </div>
-
-        <div className="results-section">
-          <h2>Results</h2>
-          {results.length > 0 ? (
-            <ul className="results-list">
-              {results.map((result) => (
-                <li key={result.id} className="result-item">
-                  <span className="result-label">{result.label}:</span>
-                  <span className="result-value">
-                    {result.value} {result.unit}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="no-results">Enter values and click Calculate</p>
-          )}
-        </div>
+        <UnifiedInputForm onSubmit={handleFormSubmit} isLoading={isLoading} />
       </div>
     </div>
   );

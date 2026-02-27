@@ -1,65 +1,61 @@
-// Calculator controller hook - manages state and orchestrates between views and services
-import { useState, useCallback } from 'react';
-import { calculatorService } from '../services';
-import type { CalculatorResult } from '../models';
+/**
+ * Calculator Controller Hook
+ * Orchestrates calculator workflow: form submission → calculations → results navigation
+ */
 
-interface CalculatorState {
-  inputs: Record<string, number | string>;
-  results: CalculatorResult[];
+import { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { runAllCalculators, getErrorSummary } from '../services/orchestration';
+import type { FormData } from '../models';
+
+interface CalculatorControllerState {
   isLoading: boolean;
   error: string | null;
 }
 
 export function useCalculatorController() {
-  const [state, setState] = useState<CalculatorState>({
-    inputs: {},
-    results: [],
+  const navigate = useNavigate();
+  const [state, setState] = useState<CalculatorControllerState>({
     isLoading: false,
     error: null,
   });
 
-  const updateInput = useCallback((key: string, value: number | string) => {
-    setState((prev) => ({
-      ...prev,
-      inputs: { ...prev.inputs, [key]: value },
-      error: null,
-    }));
-  }, []);
+  /**
+   * Handle form submission - runs all calculators and navigates to results
+   */
+  const calculate = useCallback(
+    async (formData: FormData) => {
+      setState({ isLoading: true, error: null });
 
-  const calculate = useCallback(async () => {
-    setState((prev) => ({ ...prev, isLoading: true, error: null }));
+      try {
+        const results = await runAllCalculators(formData);
 
-    const response = await calculatorService.calculate(state.inputs);
-
-    if (response.success && response.data) {
-      setState((prev) => ({
-        ...prev,
-        results: response.data!,
-        isLoading: false,
-      }));
-    } else {
-      setState((prev) => ({
-        ...prev,
-        error: response.error || 'Calculation failed',
-        isLoading: false,
-      }));
-    }
-  }, [state.inputs]);
-
-  const reset = useCallback(() => {
-    setState({
-      inputs: {},
-      results: [],
-      isLoading: false,
-      error: null,
-    });
-  }, []);
+        if (results.success) {
+          // Success - navigate to results page with consolidated results
+          navigate('/results', { state: { results } });
+        } else {
+          // Fail-all: show error if any calculator failed
+          const errorMessage = getErrorSummary(results);
+          setState({
+            isLoading: false,
+            error: errorMessage || 'Calculation failed',
+          });
+        }
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        setState({
+          isLoading: false,
+          error: errorMessage,
+        });
+      }
+    },
+    [navigate]
+  );
 
   return {
-    ...state,
-    updateInput,
     calculate,
-    reset,
+    isLoading: state.isLoading,
+    error: state.error,
   };
 }
 
