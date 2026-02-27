@@ -60,10 +60,93 @@ function getZodiacMeaning(zodiac: string): ZodiacMeaning | null {
 }
 
 /**
+ * Common street suffixes and directionals to strip from street names
+ * before calculating numerology. Case-insensitive, matched as whole words.
+ * e.g. "Barnes Road" → "Barnes", "Park Avenue South" → "Park"
+ */
+const STREET_SUFFIXES = new Set([
+  // Full names
+  'road',
+  'street',
+  'avenue',
+  'court',
+  'boulevard',
+  'drive',
+  'lane',
+  'place',
+  'way',
+  'circle',
+  'trail',
+  'terrace',
+  'crescent',
+  'highway',
+  'parkway',
+  'alley',
+  'path',
+  'pike',
+  'plaza',
+  'square',
+  'loop',
+  'run',
+  'crossing',
+  'point',
+  'ridge',
+  'view',
+  'pass',
+  'bend',
+  // Abbreviations
+  'rd',
+  'st',
+  'ave',
+  'ct',
+  'blvd',
+  'dr',
+  'ln',
+  'pl',
+  'cir',
+  'trl',
+  'ter',
+  'cres',
+  'hwy',
+  'pkwy',
+  'aly',
+  'sq',
+  // Directionals
+  'north',
+  'south',
+  'east',
+  'west',
+  'n',
+  's',
+  'e',
+  'w',
+  'ne',
+  'nw',
+  'se',
+  'sw',
+  'northeast',
+  'northwest',
+  'southeast',
+  'southwest',
+]);
+
+/**
+ * Strip street suffixes and directionals from a street name
+ * Returns only the meaningful part for numerology calculation
+ */
+function stripStreetSuffixes(streetName: string): string {
+  const words = streetName.trim().split(/\s+/);
+  const meaningful = words.filter((w) => !STREET_SUFFIXES.has(w.toLowerCase()));
+  return meaningful.length > 0 ? meaningful.join(' ') : streetName;
+}
+
+/**
  * Build a numerology level with full meanings
  */
 function buildLevel(level: string, value: string, name: string): NumerologyLevel {
-  const number = chaldeanNumerologyCalculator([value]);
+  // Strip street suffixes when calculating Street Name numerology
+  const calcValue = name === 'Street Name' ? stripStreetSuffixes(value) : value;
+  const number = chaldeanNumerologyCalculator([calcValue]);
   const meaning = getFullMeaning(number);
 
   return {
