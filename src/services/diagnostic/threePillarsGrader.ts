@@ -79,8 +79,9 @@ function gradePillar1(natalChart: NatalChartResult | null): GradeItem[] {
       reason = `${name} in house ${house} (not angular)`;
     }
 
+    const zodiacSign = planet.zodiac_sign.name.en;
     items.push({
-      source: `Natal ${name} in House ${house}`,
+      source: `Natal ${name} in House ${house} (${zodiacSign})`,
       pillar: 1,
       section: 'Natal Angular',
       planet: name,
@@ -122,7 +123,7 @@ function gradePillar2Transits(transits: TransitsResult | null): GradeItem[] {
     }
 
     items.push({
-      source: `Transit ${name} in House ${house}`,
+      source: `Transit ${name} in House ${house} (${transit.current.sign})`,
       pillar: 2,
       section: 'Transit Angular',
       planet: name,
