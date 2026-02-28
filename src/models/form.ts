@@ -74,12 +74,17 @@ export const ZODIAC_SIGNS_OPTIONS = [
  * Extract user info from form data (for display in results)
  */
 export function extractUserInfo(formData: FormData): UserInfo {
+  const streetLine = [formData.streetNumber, formData.l2].filter(Boolean).join(' ');
+  const unitLine = formData.l1 ? `Unit ${formData.l1}` : '';
+  const address = [streetLine, unitLine, formData.postalCode].filter(Boolean).join(', ');
+
   return {
     name: formData.name || 'Unknown',
     dateOfBirth: formData.dateOfBirth,
     timeOfBirth: formData.timeOfBirth,
     birthLocation: formData.birthLocation?.name || 'Unknown',
     currentLocation: formData.currentLocation?.name || 'Unknown',
+    address: address || undefined,
   };
 }
 

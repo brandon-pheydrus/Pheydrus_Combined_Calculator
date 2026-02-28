@@ -210,6 +210,7 @@ export interface UserInfo {
   timeOfBirth: string;
   birthLocation: string;
   currentLocation: string;
+  address?: string;
 }
 
 export interface CalculatorError {

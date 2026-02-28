@@ -31,6 +31,83 @@ const GRADE_COLORS: Record<
   F: { bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-400', label: 'Difficult' },
 };
 
+// Pillar colours: Structure=orange, Timing=blue, Environment=purple
+const PILLAR_COLORS = ['#f97316', '#3b82f6', '#8b5cf6'] as const;
+
+function polarToCartesian(cx: number, cy: number, r: number, angleDeg: number) {
+  const rad = ((angleDeg - 90) * Math.PI) / 180;
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+}
+
+function arcPath(cx: number, cy: number, r: number, startDeg: number, endDeg: number): string {
+  const span = endDeg - startDeg;
+  if (span >= 359.99) {
+    // Full circle — two half-arcs
+    return `M ${cx} ${cy - r} A ${r} ${r} 0 1 1 ${cx} ${cy + r} A ${r} ${r} 0 1 1 ${cx} ${cy - r} Z`;
+  }
+  const s = polarToCartesian(cx, cy, r, startDeg);
+  const e = polarToCartesian(cx, cy, r, endDeg);
+  const large = span > 180 ? 1 : 0;
+  return `M ${cx} ${cy} L ${s.x.toFixed(2)} ${s.y.toFixed(2)} A ${r} ${r} 0 ${large} 1 ${e.x.toFixed(2)} ${e.y.toFixed(2)} Z`;
+}
+
+function FSourcePieChart({ pillars, totalFs }: { pillars: readonly PillarSummary[]; totalFs: number }) {
+  const cx = 90, cy = 90, r = 72;
+
+  if (totalFs === 0) {
+    return (
+      <div className="flex flex-col items-center gap-2">
+        <svg viewBox="0 0 180 180" className="w-32 h-32">
+          <circle cx={cx} cy={cy} r={r} fill="#10b981" />
+          <text x={cx} y={cy - 7} textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">All</text>
+          <text x={cx} y={cy + 12} textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">A&apos;s</text>
+        </svg>
+        <p className="text-xs text-emerald-700 font-semibold">Zero Pressure Points</p>
+      </div>
+    );
+  }
+
+  let angle = 0;
+  const slices = pillars
+    .map((p, i) => {
+      if (p.fCount === 0) return null;
+      const sweep = (p.fCount / totalFs) * 360;
+      const slice = {
+        path: arcPath(cx, cy, r, angle, angle + sweep),
+        color: PILLAR_COLORS[i],
+        name: p.name,
+        fCount: p.fCount,
+        pct: Math.round((p.fCount / totalFs) * 100),
+      };
+      angle += sweep;
+      return slice;
+    })
+    .filter(Boolean);
+
+  return (
+    <div className="flex items-center gap-5">
+      <svg viewBox="0 0 180 180" className="w-32 h-32 shrink-0">
+        {slices.map((s, i) =>
+          s ? <path key={i} d={s.path} fill={s.color} stroke="white" strokeWidth="1.5" /> : null
+        )}
+      </svg>
+      <div className="space-y-2">
+        <p className="text-xs font-semibold text-[#6b6188] uppercase tracking-wide mb-1">F Sources</p>
+        {slices.map((s, i) =>
+          s ? (
+            <div key={i} className="flex items-center gap-2">
+              <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: s.color }} />
+              <span className="text-xs text-[#2d2a3e] font-medium">{s.name}</span>
+              <span className="text-xs font-bold text-[#2d2a3e]">{s.pct}%</span>
+              <span className="text-xs text-gray-400">({s.fCount} F{s.fCount !== 1 ? "'s" : ''})</span>
+            </div>
+          ) : null
+        )}
+      </div>
+    </div>
+  );
+}
+
 function getGradeItemStyle(grade: GradeItem['grade']): string {
   if (grade === 'F') return 'bg-red-50 border-l-4 border-red-400';
   if (grade === 'A') return 'bg-emerald-50 border-l-4 border-emerald-400';
@@ -147,6 +224,11 @@ export function AngularDiagnosticResults({ result }: AngularDiagnosticResultsPro
                 </span>
               </div>
             </div>
+          </div>
+
+          {/* Pie chart — F source breakdown */}
+          <div className="mt-4 pt-4 border-t border-black/10">
+            <FSourcePieChart pillars={result.pillars} totalFs={result.totalFs} />
           </div>
         </div>
 

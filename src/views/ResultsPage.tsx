@@ -39,9 +39,9 @@ export function ResultsPage() {
     <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-[#2d2a3e] mb-2">Pheydrus Calculation Results</h1>
+        <h1 className="text-4xl font-bold text-[#2d2a3e] mb-2">Pheydrus Proprietary 3-Pillar Analysis</h1>
         <p className="text-[#6b6188]">
-          Complete astrological and numerological analysis for {results.userInfo.name}
+          Complete analysis for {results.userInfo.name}
         </p>
       </div>
 
@@ -58,6 +58,10 @@ export function ResultsPage() {
             <p className="text-lg text-[#2d2a3e]">{results.userInfo.dateOfBirth}</p>
           </div>
           <div>
+            <p className="text-sm font-medium text-gray-400">Time of Birth</p>
+            <p className="text-lg text-[#2d2a3e]">{results.userInfo.timeOfBirth || '—'}</p>
+          </div>
+          <div>
             <p className="text-sm font-medium text-gray-400">Birth Location</p>
             <p className="text-lg text-[#2d2a3e]">{results.userInfo.birthLocation}</p>
           </div>
@@ -65,6 +69,12 @@ export function ResultsPage() {
             <p className="text-sm font-medium text-gray-400">Current Location</p>
             <p className="text-lg text-[#2d2a3e]">{results.userInfo.currentLocation}</p>
           </div>
+          {results.userInfo.address && (
+            <div>
+              <p className="text-sm font-medium text-gray-400">Address</p>
+              <p className="text-lg text-[#2d2a3e]">{results.userInfo.address}</p>
+            </div>
+          )}
         </div>
       </div>
 
