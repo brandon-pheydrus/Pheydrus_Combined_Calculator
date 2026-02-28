@@ -27,6 +27,8 @@ export interface PlanetaryTransit {
   past: Placement;
   houseNumber: number;
   houseTheme: string;
+  pastHouseNumber: number;
+  pastHouseTheme: string;
 }
 
 export interface TransitsResult {

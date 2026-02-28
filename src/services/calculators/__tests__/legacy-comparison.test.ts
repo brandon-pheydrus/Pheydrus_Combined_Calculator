@@ -137,6 +137,15 @@ describe('Legacy Comparison: Transits', () => {
     expect(neptune.houseNumber).toBe(11);
   });
 
+  it('Sagittarius rising: Pluto(Aquarius) in house 3, not house 4', () => {
+    const result = calculateTransits({ risingSign: 'Sagittarius' });
+    const pluto = result.transits.find((t) => t.planet === 'Pluto')!;
+
+    // Sagittarius=1, Capricorn=2, Aquarius=3 → house 3
+    // (Aquarius idx 10 - Sagittarius idx 8 + 12) % 12 + 1 = 3
+    expect(pluto.houseNumber).toBe(3);
+  });
+
   it('Libra rising: opposite houses from Aries rising', () => {
     const ariesResult = calculateTransits({ risingSign: 'Aries' });
     const libraResult = calculateTransits({ risingSign: 'Libra' });
@@ -662,5 +671,194 @@ describe('Legacy Comparison: Full Calculation Traces', () => {
 
     // South Node in Virgo (sign index 5): from Gemini(2) → (5-2+12)%12+1 = 4
     expect(result.transits.find((t) => t.planet === 'South Node')!.houseNumber).toBe(4);
+  });
+});
+
+// ============================================================================
+// COMPREHENSIVE HOUSE ACCURACY: All 12 rising signs × all 6 transit planets
+//
+// Current transit signs (2026):
+//   Pluto     = Aquarius (idx 10)   past = Capricorn (idx 9)
+//   Neptune   = Aries    (idx  0)   past = Pisces    (idx 11)
+//   Saturn    = Aries    (idx  0)   past = Pisces    (idx 11)
+//   Uranus    = Gemini   (idx  2)   past = Taurus    (idx  1)
+//   North Node= Pisces   (idx 11)   past = Aries     (idx  0)
+//   South Node= Virgo    (idx  5)   past = Libra     (idx  6)
+//
+// Formula: house = (planet_idx - rising_idx + 12) % 12 + 1
+// ============================================================================
+describe('House Accuracy: All 12 rising signs × current transit planets', () => {
+  function getHouses(result: ReturnType<typeof calculateTransits>) {
+    const t = (name: string) => result.transits.find((x) => x.planet === name)!;
+    return {
+      pluto: t('Pluto').houseNumber,
+      neptune: t('Neptune').houseNumber,
+      saturn: t('Saturn').houseNumber,
+      uranus: t('Uranus').houseNumber,
+      nn: t('North Node').houseNumber,
+      sn: t('South Node').houseNumber,
+    };
+  }
+
+  it('Aries rising (idx 0)', () => {
+    const h = getHouses(calculateTransits({ risingSign: 'Aries' }));
+    expect(h.pluto).toBe(11);   // Aquarius(10-0+12)%12+1 = 11
+    expect(h.neptune).toBe(1);  // Aries  (0-0+12)%12+1  = 1
+    expect(h.saturn).toBe(1);
+    expect(h.uranus).toBe(3);   // Gemini (2-0+12)%12+1  = 3
+    expect(h.nn).toBe(12);      // Pisces (11-0+12)%12+1 = 12
+    expect(h.sn).toBe(6);       // Virgo  (5-0+12)%12+1  = 6
+  });
+
+  it('Taurus rising (idx 1)', () => {
+    const h = getHouses(calculateTransits({ risingSign: 'Taurus' }));
+    expect(h.pluto).toBe(10);   // (10-1+12)%12+1 = 10
+    expect(h.neptune).toBe(12); // (0-1+12)%12+1  = 12
+    expect(h.saturn).toBe(12);
+    expect(h.uranus).toBe(2);   // (2-1+12)%12+1  = 2
+    expect(h.nn).toBe(11);      // (11-1+12)%12+1 = 11
+    expect(h.sn).toBe(5);       // (5-1+12)%12+1  = 5
+  });
+
+  it('Gemini rising (idx 2)', () => {
+    const h = getHouses(calculateTransits({ risingSign: 'Gemini' }));
+    expect(h.pluto).toBe(9);
+    expect(h.neptune).toBe(11);
+    expect(h.saturn).toBe(11);
+    expect(h.uranus).toBe(1);
+    expect(h.nn).toBe(10);
+    expect(h.sn).toBe(4);
+  });
+
+  it('Cancer rising (idx 3)', () => {
+    const h = getHouses(calculateTransits({ risingSign: 'Cancer' }));
+    expect(h.pluto).toBe(8);    // (10-3+12)%12+1 = 8
+    expect(h.neptune).toBe(10); // (0-3+12)%12+1  = 10
+    expect(h.saturn).toBe(10);
+    expect(h.uranus).toBe(12);  // (2-3+12)%12+1  = 12
+    expect(h.nn).toBe(9);       // (11-3+12)%12+1 = 9
+    expect(h.sn).toBe(3);       // (5-3+12)%12+1  = 3
+  });
+
+  it('Leo rising (idx 4)', () => {
+    const h = getHouses(calculateTransits({ risingSign: 'Leo' }));
+    expect(h.pluto).toBe(7);    // (10-4+12)%12+1 = 7
+    expect(h.neptune).toBe(9);  // (0-4+12)%12+1  = 9
+    expect(h.saturn).toBe(9);
+    expect(h.uranus).toBe(11);  // (2-4+12)%12+1  = 11
+    expect(h.nn).toBe(8);       // (11-4+12)%12+1 = 8
+    expect(h.sn).toBe(2);       // (5-4+12)%12+1  = 2
+  });
+
+  it('Virgo rising (idx 5)', () => {
+    const h = getHouses(calculateTransits({ risingSign: 'Virgo' }));
+    expect(h.pluto).toBe(6);    // (10-5+12)%12+1 = 6
+    expect(h.neptune).toBe(8);  // (0-5+12)%12+1  = 8
+    expect(h.saturn).toBe(8);
+    expect(h.uranus).toBe(10);  // (2-5+12)%12+1  = 10
+    expect(h.nn).toBe(7);       // (11-5+12)%12+1 = 7
+    expect(h.sn).toBe(1);       // (5-5+12)%12+1  = 1
+  });
+
+  it('Libra rising (idx 6)', () => {
+    const h = getHouses(calculateTransits({ risingSign: 'Libra' }));
+    expect(h.pluto).toBe(5);    // (10-6+12)%12+1 = 5
+    expect(h.neptune).toBe(7);  // (0-6+12)%12+1  = 7
+    expect(h.saturn).toBe(7);
+    expect(h.uranus).toBe(9);   // (2-6+12)%12+1  = 9
+    expect(h.nn).toBe(6);       // (11-6+12)%12+1 = 6
+    expect(h.sn).toBe(12);      // (5-6+12)%12+1  = 12
+  });
+
+  it('Scorpio rising (idx 7)', () => {
+    const h = getHouses(calculateTransits({ risingSign: 'Scorpio' }));
+    expect(h.pluto).toBe(4);    // (10-7+12)%12+1 = 4
+    expect(h.neptune).toBe(6);  // (0-7+12)%12+1  = 6
+    expect(h.saturn).toBe(6);
+    expect(h.uranus).toBe(8);   // (2-7+12)%12+1  = 8
+    expect(h.nn).toBe(5);       // (11-7+12)%12+1 = 5
+    expect(h.sn).toBe(11);      // (5-7+12)%12+1  = 11
+  });
+
+  it('Sagittarius rising (idx 8) — all 6 planets', () => {
+    const h = getHouses(calculateTransits({ risingSign: 'Sagittarius' }));
+    expect(h.pluto).toBe(3);    // Aquarius  (10-8+12)%12+1 = 3
+    expect(h.neptune).toBe(5);  // Aries     (0-8+12)%12+1  = 5
+    expect(h.saturn).toBe(5);
+    expect(h.uranus).toBe(7);   // Gemini    (2-8+12)%12+1  = 7
+    expect(h.nn).toBe(4);       // Pisces    (11-8+12)%12+1 = 4
+    expect(h.sn).toBe(10);      // Virgo     (5-8+12)%12+1  = 10
+  });
+
+  it('Capricorn rising (idx 9)', () => {
+    const h = getHouses(calculateTransits({ risingSign: 'Capricorn' }));
+    expect(h.pluto).toBe(2);    // (10-9+12)%12+1 = 2
+    expect(h.neptune).toBe(4);  // (0-9+12)%12+1  = 4
+    expect(h.saturn).toBe(4);
+    expect(h.uranus).toBe(6);   // (2-9+12)%12+1  = 6
+    expect(h.nn).toBe(3);       // (11-9+12)%12+1 = 3
+    expect(h.sn).toBe(9);       // (5-9+12)%12+1  = 9
+  });
+
+  it('Aquarius rising (idx 10)', () => {
+    const h = getHouses(calculateTransits({ risingSign: 'Aquarius' }));
+    expect(h.pluto).toBe(1);    // (10-10+12)%12+1 = 1
+    expect(h.neptune).toBe(3);  // (0-10+12)%12+1  = 3
+    expect(h.saturn).toBe(3);
+    expect(h.uranus).toBe(5);   // (2-10+12)%12+1  = 5
+    expect(h.nn).toBe(2);       // (11-10+12)%12+1 = 2
+    expect(h.sn).toBe(8);       // (5-10+12)%12+1  = 8
+  });
+
+  it('Pisces rising (idx 11)', () => {
+    const h = getHouses(calculateTransits({ risingSign: 'Pisces' }));
+    expect(h.pluto).toBe(12);   // (10-11+12)%12+1 = 12
+    expect(h.neptune).toBe(2);  // (0-11+12)%12+1  = 2
+    expect(h.saturn).toBe(2);
+    expect(h.uranus).toBe(4);   // (2-11+12)%12+1  = 4
+    expect(h.nn).toBe(1);       // (11-11+12)%12+1 = 1
+    expect(h.sn).toBe(7);       // (5-11+12)%12+1  = 7
+  });
+});
+
+// ============================================================================
+// PAST HOUSE ACCURACY: pastHouseNumber uses the past transit sign, not current
+// ============================================================================
+describe('Past house accuracy: pastHouseNumber uses past transit sign', () => {
+  it('Sagittarius rising — past houses are distinct from current houses', () => {
+    const result = calculateTransits({ risingSign: 'Sagittarius' });
+
+    const pluto = result.transits.find((t) => t.planet === 'Pluto')!;
+    // Current: Aquarius (idx 10) → house 3
+    expect(pluto.houseNumber).toBe(3);
+    // Past: Capricorn (idx 9) → (9-8+12)%12+1 = 2
+    expect(pluto.pastHouseNumber).toBe(2);
+
+    const neptune = result.transits.find((t) => t.planet === 'Neptune')!;
+    // Current: Aries (idx 0) → house 5
+    expect(neptune.houseNumber).toBe(5);
+    // Past: Pisces (idx 11) → (11-8+12)%12+1 = 4
+    expect(neptune.pastHouseNumber).toBe(4);
+
+    const uranus = result.transits.find((t) => t.planet === 'Uranus')!;
+    // Current: Gemini (idx 2) → house 7
+    expect(uranus.houseNumber).toBe(7);
+    // Past: Taurus (idx 1) → (1-8+12)%12+1 = 6
+    expect(uranus.pastHouseNumber).toBe(6);
+
+    const nn = result.transits.find((t) => t.planet === 'North Node')!;
+    // Current: Pisces (idx 11) → house 4
+    expect(nn.houseNumber).toBe(4);
+    // Past: Aries (idx 0) → (0-8+12)%12+1 = 5
+    expect(nn.pastHouseNumber).toBe(5);
+  });
+
+  it('Aries rising — Pluto past(Capricorn) is house 10, not house 11', () => {
+    const result = calculateTransits({ risingSign: 'Aries' });
+    const pluto = result.transits.find((t) => t.planet === 'Pluto')!;
+    // Current: Aquarius (idx 10) → house 11
+    expect(pluto.houseNumber).toBe(11);
+    // Past: Capricorn (idx 9) → (9-0+12)%12+1 = 10
+    expect(pluto.pastHouseNumber).toBe(10);
   });
 });

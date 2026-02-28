@@ -122,7 +122,7 @@ export function TransitsResults({ result }: TransitsResultsProps) {
               <TransitCard
                 planet={transit.planet}
                 placement={transit.past}
-                houseNumber={transit.houseNumber}
+                houseNumber={transit.pastHouseNumber}
                 title="Past Transit &rarr; "
                 isPast={true}
               />

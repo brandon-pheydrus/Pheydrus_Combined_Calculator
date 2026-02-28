@@ -152,27 +152,15 @@ function getHouses(risingSign: string): Array<{ house: number; sign: string; the
 }
 
 /**
- * Assign planets to houses based on rising sign
+ * Get the house number for a specific zodiac sign given a rising sign.
  *
- * @param planet - Planet name
- * @param risingSign - Rising sign
+ * @param sign - Zodiac sign name (e.g. 'Aquarius')
+ * @param risingSign - Rising sign name (e.g. 'Sagittarius')
  * @returns House number (1-12)
  */
-function getPlanetHouseNumber(planet: string, risingSign: string): number {
-  // In simple astrology without coords, we use default placements
-  // For transits, we use the planet's current transit sign
-  // and determine which house it falls into based on rising sign
-
-  // Default: place planet in house based on its sign relative to rising
-  const currentTransit = PLANET_TRANSITS_DATA.find((p) => p.planet === planet);
-  if (!currentTransit) {
-    return 1; // Default to house 1
-  }
-
+function getHouseForSign(sign: string, risingSign: string): number {
   const houses = getHouses(risingSign);
-  const planetSign = currentTransit.current.sign;
-  const house = houses.find((h) => h.sign === planetSign);
-
+  const house = houses.find((h) => h.sign === sign);
   return house ? house.house : 1;
 }
 
@@ -191,8 +179,10 @@ export function calculateTransits(input: TransitsInput): TransitsResult {
   }
 
   const transits: PlanetaryTransit[] = PLANET_TRANSITS_DATA.map((planetData) => {
-    const houseNumber = getPlanetHouseNumber(planetData.planet, risingSign as string);
+    const houseNumber = getHouseForSign(planetData.current.sign, risingSign as string);
     const houseTheme = HOUSE_THEMES[houseNumber - 1];
+    const pastHouseNumber = getHouseForSign(planetData.past.sign, risingSign as string);
+    const pastHouseTheme = HOUSE_THEMES[pastHouseNumber - 1];
     const planetTheme = PLANET_THEMES[planetData.planet] || '';
 
     return {
@@ -202,6 +192,8 @@ export function calculateTransits(input: TransitsInput): TransitsResult {
       past: planetData.past,
       houseNumber,
       houseTheme,
+      pastHouseNumber,
+      pastHouseTheme,
     };
   });
 
