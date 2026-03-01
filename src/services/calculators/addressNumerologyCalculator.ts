@@ -197,22 +197,13 @@ export function calculateAddressNumerology(input: AddressNumerologyInput): Addre
   if (L3?.value) levelsRaw.push(L3);
   if (L4?.value) levelsRaw.push(L4);
 
-  // Calculate "Level" (unconscious combined value) using legacy priority logic
-  // Must match legacy getLevelsArray exactly (with buildingNumberAndName always null):
-  //   L1=unitNumber, L2B=streetNumber (L2A=buildingNumberAndName is always null in legacy form)
-  //   Priority: L1+L2B+L3 → L1+L2B → L2B+L3
-  let unconsciousValue: string[] | null = null;
-  if (L1?.value && L2A?.value && L3?.value) {
-    unconsciousValue = [L1.value, L2A.value, L3.value];
-  } else if (L1?.value && L2A?.value) {
-    unconsciousValue = [L1.value, L2A.value];
-  } else if (L2A?.value && L3?.value) {
-    unconsciousValue = [L2A.value, L3.value];
-  }
-
-  if (unconsciousValue) {
+  // Calculate "Level" — combined value of all provided components:
+  // Unit Number + Building/House Number + Street Name + Postal Code
+  // Reduced to a single digit (11 preserved as master number)
+  const levelComponents = [L1, L2A, L3, L4].filter(Boolean).map((c) => c!.value);
+  if (levelComponents.length >= 1) {
     levelsRaw.push({
-      value: unconsciousValue.join(' + '),
+      value: levelComponents.join(' + '),
       name: 'Level',
     });
   }
