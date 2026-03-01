@@ -293,6 +293,7 @@ function buildPillarSummary(
     name,
     description,
     fCount: items.filter((i) => i.grade === 'F').length,
+    cCount: items.filter((i) => i.grade === 'C').length,
     aCount: items.filter((i) => i.grade === 'A').length,
     items,
   };
@@ -329,7 +330,9 @@ export function gradeThreePillars(input: GraderInput): AngularDiagnosticResult {
   return {
     pillars: [pillar1, pillar2, pillar3],
     totalFs,
+    totalCs,
     totalAs,
+    score,
     finalGrade,
     allItems,
   };

@@ -39,6 +39,7 @@ export interface PillarSummary {
   name: 'Structure' | 'Timing' | 'Environment';
   description: string;
   fCount: number;
+  cCount: number;
   aCount: number;
   items: GradeItem[];
 }
@@ -49,7 +50,9 @@ export interface PillarSummary {
 export interface AngularDiagnosticResult {
   pillars: [PillarSummary, PillarSummary, PillarSummary];
   totalFs: number;
+  totalCs: number;
   totalAs: number;
+  score: number;
   finalGrade: FinalGrade;
   allItems: GradeItem[];
 }

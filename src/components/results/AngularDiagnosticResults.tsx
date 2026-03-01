@@ -206,6 +206,7 @@ function getGradeBadge(grade: GradeItem['grade']): string {
 function PillarSection({ summary }: { summary: PillarSummary }) {
   const [isOpen, setIsOpen] = useState(true);
   const hasFs = summary.fCount > 0;
+  const hasCs = summary.cCount > 0;
   const hasAs = summary.aCount > 0;
 
   return (
@@ -229,6 +230,11 @@ function PillarSection({ summary }: { summary: PillarSummary }) {
           {hasFs && (
             <span className="text-xs font-semibold bg-red-100 text-red-700 px-2 py-1 rounded">
               {summary.fCount} F{summary.fCount !== 1 ? "'s" : ''}
+            </span>
+          )}
+          {hasCs && (
+            <span className="text-xs font-semibold bg-amber-100 text-amber-700 px-2 py-1 rounded">
+              {summary.cCount} C{summary.cCount !== 1 ? "'s" : ''}
             </span>
           )}
           {hasAs && (
@@ -295,6 +301,14 @@ export function AngularDiagnosticResults({ result }: AngularDiagnosticResultsPro
               <div className="text-right">
                 <p className="text-xs text-[#6b6188]">Total F&apos;s</p>
                 <p className="text-2xl font-bold text-red-600">{result.totalFs}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-xs text-[#6b6188]">Total C&apos;s</p>
+                <p className="text-2xl font-bold text-amber-500">{result.totalCs}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-xs text-[#6b6188]">Score</p>
+                <p className="text-2xl font-bold text-[#6b6188]">{result.score % 1 === 0 ? result.score : result.score.toFixed(1)}</p>
               </div>
               <div className="text-right">
                 <p className="text-xs text-[#6b6188]">Total A&apos;s</p>
