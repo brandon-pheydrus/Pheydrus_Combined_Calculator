@@ -8,7 +8,6 @@ import { CityAutocomplete } from './CityAutocomplete';
 import { useFormState } from '../../hooks/useFormState';
 import { useFormValidation } from '../../hooks/useFormValidation';
 import type { FormData } from '../../models/form';
-import { ZODIAC_SIGNS_OPTIONS } from '../../models/form';
 
 interface UnifiedInputFormProps {
   onSubmit: (formData: FormData) => void;
@@ -114,23 +113,7 @@ export function UnifiedInputForm({ onSubmit, isLoading = false }: UnifiedInputFo
             />
           </div>
 
-          <div>
-            <label className={labelClass}>
-              Rising Sign <span className="text-gray-400">(optional)</span>
-            </label>
-            <select
-              value={formData.risingSign}
-              onChange={(e) => setField('risingSign', e.target.value)}
-              className={inputClass}
-            >
-              <option value="">Select zodiac sign...</option>
-              {ZODIAC_SIGNS_OPTIONS.map((sign) => (
-                <option key={sign} value={sign}>
-                  {sign}
-                </option>
-              ))}
-            </select>
-          </div>
+
         </div>
       </FormSection>
 

@@ -1,12 +1,11 @@
 /**
  * Calculator Orchestrator
- * Runs all 5 calculators in parallel with fail-all error handling
+ * Natal chart runs first so its risingSign feeds the transits calculator.
  */
 
-import type { FormData, ConsolidatedResults, CalculatorError } from '../../models';
+import type { FormData, ConsolidatedResults, CalculatorError, TransitsInput } from '../../models';
 import {
   calculateTransits,
-  validateTransitsInput,
   calculateNatalChart,
   validateNatalChartInput,
   calculateLifePath,
@@ -17,7 +16,6 @@ import {
   validateAddressNumerologyInput,
 } from '../calculators';
 import {
-  mapToTransitsInput,
   mapToNatalChartInput,
   mapToLifePathInput,
   mapToRelocationInput,
@@ -29,59 +27,39 @@ import { runAngularDiagnostic } from '../diagnostic';
 const ORCHESTRATOR_TIMEOUT = 10000; // 10 seconds
 
 /**
- * Run all 5 calculators in parallel
- * Implements fail-all: if any calculator fails, all fail
+ * Run all 5 calculators.
+ * Natal chart runs first so its risingSign can feed the transits calculator.
  */
 export async function runAllCalculators(formData: FormData): Promise<ConsolidatedResults> {
   try {
     // Map inputs
-    const transitsInput = mapToTransitsInput(formData);
     const natalChartInput = mapToNatalChartInput(formData);
     const lifePathInput = mapToLifePathInput(formData);
     const relocationInput = mapToRelocationInput(formData);
     const addressNumerologyInput = mapToAddressNumerologyInput(formData);
 
-    // Validate all inputs
+    // Validate non-transits inputs upfront
     const validations = [
-      validateTransitsInput(transitsInput),
-      validateNatalChartInput(natalChartInput),
-      validateLifePathInput(lifePathInput),
-      validateRelocationInput(relocationInput),
-      validateAddressNumerologyInput(addressNumerologyInput),
+      { result: validateNatalChartInput(natalChartInput), name: 'natalChart' },
+      { result: validateLifePathInput(lifePathInput), name: 'lifePath' },
+      { result: validateRelocationInput(relocationInput), name: 'relocation' },
+      { result: validateAddressNumerologyInput(addressNumerologyInput), name: 'addressNumerology' },
     ];
 
     const validationErrors = validations
-      .map((v, i) => {
-        if (!v.valid) {
-          const calculators = [
-            'transits',
-            'natalChart',
-            'lifePath',
-            'relocation',
-            'addressNumerology',
-          ];
-          return {
-            calculatorName: calculators[i],
-            errorMessage: v.error || 'Validation failed',
-          };
-        }
-        return null;
-      })
-      .filter((e) => e !== null) as CalculatorError[];
+      .filter((v) => !v.result.valid)
+      .map((v) => ({
+        calculatorName: v.name,
+        errorMessage: v.result.error || 'Validation failed',
+      })) as CalculatorError[];
 
     if (validationErrors.length > 0) {
       return consolidateResults(formData, null, null, null, null, null, validationErrors);
     }
 
-    // Execute all calculators in parallel with timeout
-    const results = await Promise.race([
-      Promise.all([
-        calculateTransits(transitsInput),
-        calculateNatalChart(natalChartInput),
-        calculateLifePath(lifePathInput),
-        calculateRelocation(relocationInput),
-        calculateAddressNumerology(addressNumerologyInput),
-      ]),
+    // Step 1: Run natal chart first to obtain the rising sign
+    const natalChartResult = await Promise.race([
+      calculateNatalChart(natalChartInput),
       new Promise<never>((_, reject) =>
         setTimeout(
           () => reject(new Error('Calculator timeout: exceeded 10 seconds')),
@@ -90,13 +68,24 @@ export async function runAllCalculators(formData: FormData): Promise<Consolidate
       ),
     ]);
 
-    const [
-      transitsResult,
-      natalChartResult,
-      lifePathResult,
-      relocationResult,
-      addressNumerologyResult,
-    ] = results;
+    // Step 2: Use natal chart's rising sign for transits, run all remaining in parallel
+    const transitsInput: TransitsInput = { risingSign: natalChartResult.risingSign };
+
+    const [transitsResult, lifePathResult, relocationResult, addressNumerologyResult] =
+      await Promise.race([
+        Promise.all([
+          calculateTransits(transitsInput),
+          calculateLifePath(lifePathInput),
+          calculateRelocation(relocationInput),
+          calculateAddressNumerology(addressNumerologyInput),
+        ]),
+        new Promise<never>((_, reject) =>
+          setTimeout(
+            () => reject(new Error('Calculator timeout: exceeded 10 seconds')),
+            ORCHESTRATOR_TIMEOUT
+          )
+        ),
+      ]);
 
     const consolidated = consolidateResults(
       formData,
@@ -107,7 +96,7 @@ export async function runAllCalculators(formData: FormData): Promise<Consolidate
       addressNumerologyResult
     );
 
-    // Run Angular Diagnostic after all calculators complete (non-blocking)
+    // Run Angular Diagnostic after all calculators complete
     try {
       const diagnostic = await runAngularDiagnostic(consolidated, formData);
       consolidated.diagnostic = diagnostic;

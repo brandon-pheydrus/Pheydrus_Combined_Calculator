@@ -15,34 +15,25 @@ const GRADE_COLORS: Record<
   FinalGrade,
   { bg: string; text: string; border: string; label: string }
 > = {
-  A: {
-    bg: 'bg-emerald-50',
-    text: 'text-emerald-700',
-    border: 'border-emerald-400',
-    label: 'Excellent',
-  },
+  A: { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-400', label: 'Excellent' },
   B: { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-400', label: 'Good' },
-  D: {
-    bg: 'bg-amber-50',
-    text: 'text-amber-700',
-    border: 'border-amber-400',
-    label: 'Challenging',
-  },
+  D: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-400', label: 'Challenging' },
   F: { bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-400', label: 'Difficult' },
 };
 
 // Pillar colours: Structure=orange, Timing=blue, Environment=purple
 const PILLAR_COLORS = ['#f97316', '#3b82f6', '#8b5cf6'] as const;
 
+// ─── Pie chart ────────────────────────────────────────────────────────────────
+
 function polarToCartesian(cx: number, cy: number, r: number, angleDeg: number) {
   const rad = ((angleDeg - 90) * Math.PI) / 180;
   return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
 }
 
-function arcPath(cx: number, cy: number, r: number, startDeg: number, endDeg: number): string {
+function pieArcPath(cx: number, cy: number, r: number, startDeg: number, endDeg: number): string {
   const span = endDeg - startDeg;
   if (span >= 359.99) {
-    // Full circle — two half-arcs
     return `M ${cx} ${cy - r} A ${r} ${r} 0 1 1 ${cx} ${cy + r} A ${r} ${r} 0 1 1 ${cx} ${cy - r} Z`;
   }
   const s = polarToCartesian(cx, cy, r, startDeg);
@@ -73,7 +64,7 @@ function FSourcePieChart({ pillars, totalFs }: { pillars: readonly PillarSummary
       if (p.fCount === 0) return null;
       const sweep = (p.fCount / totalFs) * 360;
       const slice = {
-        path: arcPath(cx, cy, r, angle, angle + sweep),
+        path: pieArcPath(cx, cy, r, angle, angle + sweep),
         color: PILLAR_COLORS[i],
         name: p.name,
         fCount: p.fCount,
@@ -108,6 +99,99 @@ function FSourcePieChart({ pillars, totalFs }: { pillars: readonly PillarSummary
   );
 }
 
+// ─── House wheel ──────────────────────────────────────────────────────────────
+
+const HOUSE_FILL: Record<'F' | 'A' | 'Neutral', string> = {
+  F: '#ef4444',
+  A: '#10b981',
+  Neutral: '#f3f4f6',
+};
+
+function computeHouseGrades(items: GradeItem[]): Record<number, 'F' | 'A' | 'Neutral'> {
+  const map: Record<number, Set<string>> = {};
+  for (const item of items) {
+    if (item.house === undefined) continue;
+    if (!map[item.house]) map[item.house] = new Set();
+    map[item.house].add(item.grade);
+  }
+  const result: Record<number, 'F' | 'A' | 'Neutral'> = {};
+  for (const [h, grades] of Object.entries(map)) {
+    const n = Number(h);
+    result[n] = grades.has('F') ? 'F' : grades.has('A') ? 'A' : 'Neutral';
+  }
+  return result;
+}
+
+function houseSegmentPath(cx: number, cy: number, outerR: number, innerR: number, startDeg: number): string {
+  const endDeg = startDeg + 30;
+  const toRad = (d: number) => (d * Math.PI) / 180;
+  const s1 = { x: cx + outerR * Math.cos(toRad(startDeg)), y: cy + outerR * Math.sin(toRad(startDeg)) };
+  const e1 = { x: cx + outerR * Math.cos(toRad(endDeg)), y: cy + outerR * Math.sin(toRad(endDeg)) };
+  const e2 = { x: cx + innerR * Math.cos(toRad(endDeg)), y: cy + innerR * Math.sin(toRad(endDeg)) };
+  const s2 = { x: cx + innerR * Math.cos(toRad(startDeg)), y: cy + innerR * Math.sin(toRad(startDeg)) };
+  return `M ${s1.x.toFixed(1)} ${s1.y.toFixed(1)} A ${outerR} ${outerR} 0 0 1 ${e1.x.toFixed(1)} ${e1.y.toFixed(1)} L ${e2.x.toFixed(1)} ${e2.y.toFixed(1)} A ${innerR} ${innerR} 0 0 0 ${s2.x.toFixed(1)} ${s2.y.toFixed(1)} Z`;
+}
+
+function HouseWheel({ items }: { items: GradeItem[] }) {
+  const cx = 90, cy = 90;
+  const outerR = 82, innerR = 48, labelR = 67;
+  const houseGrades = computeHouseGrades(items);
+
+  return (
+    <div className="flex flex-col items-center shrink-0">
+      <p className="text-xs font-semibold text-[#6b6188] uppercase tracking-wide mb-1">House Map</p>
+      <svg viewBox="0 0 180 180" className="w-44 h-44">
+        {Array.from({ length: 12 }, (_, i) => {
+          const houseNum = i + 1;
+          // House 1 at AC (9-o'clock / 180°), increasing clockwise
+          const startDeg = (180 + i * 30) % 360;
+          const midDeg = startDeg + 15;
+          const rad = (midDeg * Math.PI) / 180;
+          const grade = houseGrades[houseNum] ?? 'Neutral';
+          const lx = cx + labelR * Math.cos(rad);
+          const ly = cy + labelR * Math.sin(rad);
+          return (
+            <g key={houseNum}>
+              <path
+                d={houseSegmentPath(cx, cy, outerR, innerR, startDeg)}
+                fill={HOUSE_FILL[grade]}
+                stroke="white"
+                strokeWidth="1.5"
+              />
+              <text
+                x={lx.toFixed(1)}
+                y={ly.toFixed(1)}
+                textAnchor="middle"
+                dominantBaseline="central"
+                fill={grade === 'Neutral' ? '#9ca3af' : 'white'}
+                fontSize="9"
+                fontWeight="bold"
+              >
+                {houseNum}
+              </text>
+            </g>
+          );
+        })}
+        {/* Inner white circle */}
+        <circle cx={cx} cy={cy} r={innerR - 2} fill="white" />
+        {/* AC / DC axis labels */}
+        <text x={cx - outerR + 6} y={cy - 4} textAnchor="middle" fill="#9ca3af" fontSize="7">AC</text>
+        <text x={cx + outerR - 6} y={cy - 4} textAnchor="middle" fill="#9ca3af" fontSize="7">DC</text>
+      </svg>
+      <div className="flex gap-4 text-xs mt-0.5">
+        <span className="flex items-center gap-1">
+          <span className="w-2.5 h-2.5 rounded-full bg-red-400 inline-block" /> F
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block" /> A
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// ─── Grade item helpers ───────────────────────────────────────────────────────
+
 function getGradeItemStyle(grade: GradeItem['grade']): string {
   if (grade === 'F') return 'bg-red-50 border-l-4 border-red-400';
   if (grade === 'A') return 'bg-emerald-50 border-l-4 border-emerald-400';
@@ -120,10 +204,13 @@ function getGradeBadge(grade: GradeItem['grade']): string {
   return 'bg-gray-100 text-gray-500';
 }
 
+// ─── Pillar section ───────────────────────────────────────────────────────────
+
 function PillarSection({ summary }: { summary: PillarSummary }) {
   const [isOpen, setIsOpen] = useState(true);
   const hasFs = summary.fCount > 0;
   const hasAs = summary.aCount > 0;
+  const showWheel = summary.pillar === 1 || summary.pillar === 2;
 
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden">
@@ -136,7 +223,9 @@ function PillarSection({ summary }: { summary: PillarSummary }) {
             {summary.pillar}
           </span>
           <div className="text-left">
-            <h3 className="text-base font-semibold text-[#2d2a3e]">{summary.name}</h3>
+            <h3 className="text-base font-semibold text-[#2d2a3e]">
+              Pillar {summary.pillar}: {summary.name}
+            </h3>
             <p className="text-xs text-[#6b6188]">{summary.description}</p>
           </div>
         </div>
@@ -162,23 +251,29 @@ function PillarSection({ summary }: { summary: PillarSummary }) {
           {summary.items.length === 0 ? (
             <p className="text-sm text-gray-400 italic">No data available for this pillar</p>
           ) : (
-            <div className="space-y-2">
-              {summary.items.map((item, idx) => (
-                <div
-                  key={idx}
-                  className={`flex items-center justify-between gap-3 rounded px-3 py-2 ${getGradeItemStyle(item.grade)}`}
-                >
-                  <div className="text-sm text-[#2d2a3e]">
-                    <span className="font-semibold">{item.source}</span>
-                    <span className="block text-xs text-[#6b6188] mt-0.5">{item.reason}</span>
-                  </div>
-                  <span
-                    className={`text-xs font-bold px-2.5 py-1 rounded shrink-0 ${getGradeBadge(item.grade)}`}
+            <div className={`flex gap-6 ${showWheel ? 'items-start' : ''}`}>
+              {/* Grade items list */}
+              <div className="flex-1 space-y-2">
+                {summary.items.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className={`flex items-center justify-between gap-3 rounded px-3 py-2 ${getGradeItemStyle(item.grade)}`}
                   >
-                    {item.grade === 'Neutral' ? '—' : item.grade}
-                  </span>
-                </div>
-              ))}
+                    <div className="text-sm text-[#2d2a3e]">
+                      <span className="font-semibold">{item.source}</span>
+                      <span className="block text-xs text-[#6b6188] mt-0.5">{item.reason}</span>
+                    </div>
+                    <span
+                      className={`text-xs font-bold px-2.5 py-1 rounded shrink-0 ${getGradeBadge(item.grade)}`}
+                    >
+                      {item.grade === 'Neutral' ? '—' : item.grade}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* House wheel — Pillars 1 and 2 only */}
+              {showWheel && <HouseWheel items={summary.items} />}
             </div>
           )}
         </div>
@@ -186,6 +281,8 @@ function PillarSection({ summary }: { summary: PillarSummary }) {
     </div>
   );
 }
+
+// ─── Main component ───────────────────────────────────────────────────────────
 
 export function AngularDiagnosticResults({ result }: AngularDiagnosticResultsProps) {
   if (!result) return null;
@@ -216,17 +313,13 @@ export function AngularDiagnosticResults({ result }: AngularDiagnosticResultsPro
               <div
                 className={`w-16 h-16 rounded-lg flex flex-col items-center justify-center border-2 ${gradeStyle.border} ${gradeStyle.bg}`}
               >
-                <span className={`text-3xl font-black ${gradeStyle.text}`}>
-                  {result.finalGrade}
-                </span>
-                <span className={`text-[10px] font-medium ${gradeStyle.text}`}>
-                  {gradeStyle.label}
-                </span>
+                <span className={`text-3xl font-black ${gradeStyle.text}`}>{result.finalGrade}</span>
+                <span className={`text-[10px] font-medium ${gradeStyle.text}`}>{gradeStyle.label}</span>
               </div>
             </div>
           </div>
 
-          {/* Pie chart — F source breakdown */}
+          {/* Pie chart */}
           <div className="mt-4 pt-4 border-t border-black/10">
             <FSourcePieChart pillars={result.pillars} totalFs={result.totalFs} />
           </div>
