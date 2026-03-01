@@ -133,18 +133,17 @@ function houseSegmentPath(cx: number, cy: number, outerR: number, innerR: number
   return `M ${s1.x.toFixed(1)} ${s1.y.toFixed(1)} A ${outerR} ${outerR} 0 0 1 ${e1.x.toFixed(1)} ${e1.y.toFixed(1)} L ${e2.x.toFixed(1)} ${e2.y.toFixed(1)} A ${innerR} ${innerR} 0 0 0 ${s2.x.toFixed(1)} ${s2.y.toFixed(1)} Z`;
 }
 
-function HouseWheel({ items }: { items: GradeItem[] }) {
+function HouseWheel({ items, label }: { items: GradeItem[]; label?: string }) {
   const cx = 90, cy = 90;
   const outerR = 82, innerR = 48, labelR = 67;
   const houseGrades = computeHouseGrades(items);
 
   return (
     <div className="flex flex-col items-center shrink-0">
-      <p className="text-xs font-semibold text-[#6b6188] uppercase tracking-wide mb-1">House Map</p>
-      <svg viewBox="0 0 180 180" className="w-44 h-44">
+      {label && <p className="text-xs font-semibold text-[#6b6188] uppercase tracking-wide mb-1">{label}</p>}
+      <svg viewBox="0 0 180 180" className="w-32 h-32">
         {Array.from({ length: 12 }, (_, i) => {
           const houseNum = i + 1;
-          // House 1 at AC (9-o'clock / 180°), increasing clockwise
           const startDeg = (180 + i * 30) % 360;
           const midDeg = startDeg + 15;
           const rad = (midDeg * Math.PI) / 180;
@@ -173,19 +172,14 @@ function HouseWheel({ items }: { items: GradeItem[] }) {
             </g>
           );
         })}
-        {/* Inner white circle */}
         <circle cx={cx} cy={cy} r={innerR - 2} fill="white" />
-        {/* AC / DC axis labels */}
         <text x={cx - outerR + 6} y={cy - 4} textAnchor="middle" fill="#9ca3af" fontSize="7">AC</text>
         <text x={cx + outerR - 6} y={cy - 4} textAnchor="middle" fill="#9ca3af" fontSize="7">DC</text>
       </svg>
-      <div className="flex gap-4 text-xs mt-0.5">
-        <span className="flex items-center gap-1">
-          <span className="w-2.5 h-2.5 rounded-full bg-red-400 inline-block" /> F
-        </span>
-        <span className="flex items-center gap-1">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block" /> A
-        </span>
+      <div className="flex gap-3 text-xs mt-0.5">
+        <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-400 inline-block" /> F</span>
+        <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-400 inline-block" /> C</span>
+        <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" /> A</span>
       </div>
     </div>
   );
@@ -213,7 +207,6 @@ function PillarSection({ summary }: { summary: PillarSummary }) {
   const [isOpen, setIsOpen] = useState(true);
   const hasFs = summary.fCount > 0;
   const hasAs = summary.aCount > 0;
-  const showWheel = summary.pillar === 1 || summary.pillar === 2;
 
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden">
@@ -254,29 +247,23 @@ function PillarSection({ summary }: { summary: PillarSummary }) {
           {summary.items.length === 0 ? (
             <p className="text-sm text-gray-400 italic">No data available for this pillar</p>
           ) : (
-            <div className={`flex gap-6 ${showWheel ? 'items-start' : ''}`}>
-              {/* Grade items list */}
-              <div className="flex-1 space-y-2">
-                {summary.items.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className={`flex items-center justify-between gap-3 rounded px-3 py-2 ${getGradeItemStyle(item.grade)}`}
-                  >
-                    <div className="text-sm text-[#2d2a3e]">
-                      <span className="font-semibold">{item.source}</span>
-                      <span className="block text-xs text-[#6b6188] mt-0.5">{item.reason}</span>
-                    </div>
-                    <span
-                      className={`text-xs font-bold px-2.5 py-1 rounded shrink-0 ${getGradeBadge(item.grade)}`}
-                    >
-                      {item.grade === 'Neutral' ? '—' : item.grade}
-                    </span>
+            <div className="space-y-2">
+              {summary.items.map((item, idx) => (
+                <div
+                  key={idx}
+                  className={`flex items-center justify-between gap-3 rounded px-3 py-2 ${getGradeItemStyle(item.grade)}`}
+                >
+                  <div className="text-sm text-[#2d2a3e]">
+                    <span className="font-semibold">{item.source}</span>
+                    <span className="block text-xs text-[#6b6188] mt-0.5">{item.reason}</span>
                   </div>
-                ))}
-              </div>
-
-              {/* House wheel — Pillars 1 and 2 only */}
-              {showWheel && <HouseWheel items={summary.items} />}
+                  <span
+                    className={`text-xs font-bold px-2.5 py-1 rounded shrink-0 ${getGradeBadge(item.grade)}`}
+                  >
+                    {item.grade === 'Neutral' ? '—' : item.grade}
+                  </span>
+                </div>
+              ))}
             </div>
           )}
         </div>
@@ -322,9 +309,14 @@ export function AngularDiagnosticResults({ result }: AngularDiagnosticResultsPro
             </div>
           </div>
 
-          {/* Pie chart */}
-          <div className="mt-4 pt-4 border-t border-black/10">
+          {/* Pie chart + House wheels */}
+          <div className="mt-4 pt-4 border-t border-black/10 flex flex-wrap gap-6 items-start">
             <FSourcePieChart pillars={result.pillars} totalFs={result.totalFs} />
+            <div className="flex gap-5 flex-wrap">
+              {result.pillars.map((pillar) => (
+                <HouseWheel key={pillar.pillar} items={pillar.items} label={`P${pillar.pillar}: ${pillar.name}`} />
+              ))}
+            </div>
           </div>
         </div>
 
