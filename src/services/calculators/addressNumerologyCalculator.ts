@@ -197,14 +197,13 @@ export function calculateAddressNumerology(input: AddressNumerologyInput): Addre
   if (L3?.value) levelsRaw.push(L3);
   if (L4?.value) levelsRaw.push(L4);
 
-  // Calculate "Level" — combined value of all provided components:
-  // Unit Number + Building/House Number + Street Name + Postal Code
-  // Reduced to a single digit (11 preserved as master number)
-  const levelComponents = [L1, L2A, L3, L4].filter(Boolean).map((c) => c!.value);
+  // Calculate "L3" — combined value of Unit Number + Building/House Number + Street Name
+  // Reduced to a single digit (11 preserved as master number). Postal code excluded.
+  const levelComponents = [L1, L2A, L3].filter(Boolean).map((c) => c!.value);
   if (levelComponents.length >= 1) {
     levelsRaw.push({
       value: levelComponents.join(' + '),
-      name: 'Level',
+      name: 'L3',
     });
   }
 

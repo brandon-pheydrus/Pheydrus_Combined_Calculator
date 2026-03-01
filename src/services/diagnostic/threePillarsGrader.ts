@@ -245,7 +245,7 @@ function gradePillar3Address(addressNumerology: AddressNumerologyResult | null):
     // Reduce master numbers to single digit for grading.
     // Exception: 'Level' (combined unit+building+street) preserves 11 as a master number.
     let num = level.number;
-    if (num > 9 && !(levelName === 'Level' && num === 11)) {
+    if (num > 9 && !(levelName === 'L3' && num === 11)) {
       num = reduceToSingleDigitOnly(num);
     }
 
