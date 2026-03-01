@@ -4,7 +4,7 @@ import type { AngularDiagnosticResult, GradeItem, FinalGrade } from '../../model
 const GRADE_COLORS: Record<FinalGrade, { bg: string; border: string; text: string }> = {
   A: { bg: '#ecfdf5', border: '#34d399', text: '#065f46' },
   B: { bg: '#eff6ff', border: '#60a5fa', text: '#1e40af' },
-  D: { bg: '#fffbeb', border: '#fbbf24', text: '#92400e' },
+  C: { bg: '#fffbeb', border: '#fbbf24', text: '#92400e' },
   F: { bg: '#fef2f2', border: '#f87171', text: '#991b1b' },
 };
 
