@@ -42,10 +42,10 @@ function pieArcPath(cx: number, cy: number, r: number, startDeg: number, endDeg:
   return `M ${cx} ${cy} L ${s.x.toFixed(2)} ${s.y.toFixed(2)} A ${r} ${r} 0 ${large} 1 ${e.x.toFixed(2)} ${e.y.toFixed(2)} Z`;
 }
 
-function FSourcePieChart({ pillars, totalFs }: { pillars: readonly PillarSummary[]; totalFs: number }) {
+function FSourcePieChart({ pillars, score }: { pillars: readonly PillarSummary[]; score: number }) {
   const cx = 90, cy = 90, r = 72;
 
-  if (totalFs === 0) {
+  if (score === 0) {
     return (
       <div className="flex flex-col items-center gap-2">
         <svg viewBox="0 0 180 180" className="w-32 h-32">
@@ -58,17 +58,19 @@ function FSourcePieChart({ pillars, totalFs }: { pillars: readonly PillarSummary
     );
   }
 
+  // Each pillar's weighted score: F=1pt, C=0.5pt
   let angle = 0;
   const slices = pillars
     .map((p, i) => {
-      if (p.fCount === 0) return null;
-      const sweep = (p.fCount / totalFs) * 360;
+      const pillarScore = p.fCount + p.cCount * 0.5;
+      if (pillarScore === 0) return null;
+      const sweep = (pillarScore / score) * 360;
       const slice = {
         path: pieArcPath(cx, cy, r, angle, angle + sweep),
         color: PILLAR_COLORS[i],
         name: p.name,
-        fCount: p.fCount,
-        pct: Math.round((p.fCount / totalFs) * 100),
+        pillarScore,
+        pct: Math.round((pillarScore / score) * 100),
       };
       angle += sweep;
       return slice;
@@ -83,14 +85,14 @@ function FSourcePieChart({ pillars, totalFs }: { pillars: readonly PillarSummary
         )}
       </svg>
       <div className="space-y-2">
-        <p className="text-xs font-semibold text-[#6b6188] uppercase tracking-wide mb-1">F Sources</p>
+        <p className="text-xs font-semibold text-[#6b6188] uppercase tracking-wide mb-1">Unseen Force Factors</p>
         {slices.map((s, i) =>
           s ? (
             <div key={i} className="flex items-center gap-2">
               <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: s.color }} />
               <span className="text-xs text-[#2d2a3e] font-medium">{s.name}</span>
               <span className="text-xs font-bold text-[#2d2a3e]">{s.pct}%</span>
-              <span className="text-xs text-gray-400">({s.fCount} F{s.fCount !== 1 ? "'s" : ''})</span>
+              <span className="text-xs text-gray-400">({s.pillarScore % 1 === 0 ? s.pillarScore : s.pillarScore.toFixed(1)} pts)</span>
             </div>
           ) : null
         )}
@@ -325,7 +327,7 @@ export function AngularDiagnosticResults({ result }: AngularDiagnosticResultsPro
 
           {/* Pie chart + House wheels */}
           <div className="mt-4 pt-4 border-t border-black/10 flex flex-wrap gap-6 items-start">
-            <FSourcePieChart pillars={result.pillars} totalFs={result.totalFs} />
+            <FSourcePieChart pillars={result.pillars} score={result.score} />
             <div className="flex gap-5 flex-wrap">
               {result.pillars.map((pillar) => (
                 <HouseWheel key={pillar.pillar} items={pillar.items} label={`P${pillar.pillar}: ${pillar.name}`} />
@@ -346,9 +348,9 @@ export function AngularDiagnosticResults({ result }: AngularDiagnosticResultsPro
           <div className="flex flex-wrap items-center gap-4 text-xs text-[#6b6188]">
             <span className="font-medium">Grade Scale:</span>
             <span>A = score &lt; 2</span>
-            <span>B = score 2–6.5</span>
-            <span>C = score 7–10</span>
-            <span>F = score &gt; 10</span>
+            <span>B = score 2–3.5</span>
+            <span>C = score 4–6</span>
+            <span>F = score &gt; 6</span>
             <span className="text-gray-400">(F=1pt, C=0.5pt)</span>
             <span className="ml-auto italic">A&apos;s do not offset score</span>
           </div>

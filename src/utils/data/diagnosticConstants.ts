@@ -58,8 +58,8 @@ export const ADDRESS_GRADED_LEVELS = ['L3'] as const;
 // ---------------------------------------------------------------------------
 // Score = (F count × 1) + (C count × 0.5)
 export function computeFinalGrade(score: number): 'A' | 'B' | 'C' | 'F' {
-  if (score > 10) return 'F';
-  if (score >= 7) return 'C';
+  if (score > 6) return 'F';
+  if (score >= 4) return 'C';
   if (score >= 2) return 'B';
   return 'A';
 }
