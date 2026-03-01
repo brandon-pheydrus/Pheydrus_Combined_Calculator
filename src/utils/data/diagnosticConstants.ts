@@ -10,13 +10,16 @@
  */
 
 // Pheydrus Angular Houses (NOT traditional {1,4,7,10})
-export const PHEYDRUS_ANGULAR_HOUSES = new Set([1, 5, 7, 10, 11]);
+export const PHEYDRUS_ANGULAR_HOUSES = new Set([1, 5, 7, 10]);
 
 // ---------------------------------------------------------------------------
 // Pillar 1 — STRUCTURE (Natal)
 // ---------------------------------------------------------------------------
 export const PILLAR_1_MALEFICS = new Set(['Pluto', 'Saturn', 'Uranus', 'Mars', 'Neptune']);
 export const PILLAR_1_BENEFICS = new Set(['Sun', 'Moon', 'Venus', 'Jupiter']);
+// Sun or Venus in 8th or 12th house → F regardless of angular status
+export const PILLAR_1_SOFT_SPOT_PLANETS = new Set(['Sun', 'Venus']);
+export const PILLAR_1_SOFT_SPOT_HOUSES = new Set([8, 12]);
 
 // ---------------------------------------------------------------------------
 // Pillar 2 — TIMING (Transits)
@@ -24,6 +27,8 @@ export const PILLAR_1_BENEFICS = new Set(['Sun', 'Moon', 'Venus', 'Jupiter']);
 export const PILLAR_2_MALEFICS = new Set(['Neptune', 'Pluto', 'Saturn', 'Uranus']);
 // Benefics captured but NOT scored (short duration)
 export const PILLAR_2_BENEFICS = new Set(['Sun', 'Moon', 'Venus', 'Jupiter']);
+// Malefic transiting these non-angular houses also → F
+export const PILLAR_2_PRESSURE_HOUSES = new Set([2, 6, 8, 11]);
 
 // ---------------------------------------------------------------------------
 // Pillar 3 — ENVIRONMENT (Relocation)
@@ -40,11 +45,12 @@ export const LIFE_CYCLE_A_YEARS = new Set([5]);
 // ---------------------------------------------------------------------------
 // Address grading
 // ---------------------------------------------------------------------------
-export const ADDRESS_F_NUMBERS = new Set([3, 6, 8, 9]);
+export const ADDRESS_F_NUMBERS = new Set([3, 5, 6, 8, 9]);
 export const ADDRESS_A_NUMBERS = new Set([2, 7]);
 
 // Address level names to grade (from address calculator output)
-export const ADDRESS_GRADED_LEVELS = ['Unit Number', 'Street Name'] as const;
+// 'Level' = combined Unit Number + Building Number + Street Name, reduced to single digit (11 preserved)
+export const ADDRESS_GRADED_LEVELS = ['Unit Number', 'Street Name', 'Level'] as const;
 
 // ---------------------------------------------------------------------------
 // Final grade thresholds

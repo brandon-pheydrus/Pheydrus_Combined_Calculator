@@ -24,7 +24,10 @@ import {
   PHEYDRUS_ANGULAR_HOUSES,
   PILLAR_1_MALEFICS,
   PILLAR_1_BENEFICS,
+  PILLAR_1_SOFT_SPOT_PLANETS,
+  PILLAR_1_SOFT_SPOT_HOUSES,
   PILLAR_2_MALEFICS,
+  PILLAR_2_PRESSURE_HOUSES,
   PILLAR_3_MALEFICS,
   PILLAR_3_BENEFICS,
   LIFE_CYCLE_F_YEARS,
@@ -72,6 +75,9 @@ function gradePillar1(natalChart: NatalChartResult | null): GradeItem[] {
     if (isAngular && isMalefic) {
       grade = 'F';
       reason = `Malefic ${name} in angular house ${house}`;
+    } else if (PILLAR_1_SOFT_SPOT_PLANETS.has(name) && PILLAR_1_SOFT_SPOT_HOUSES.has(house)) {
+      grade = 'F';
+      reason = `${name} placement in house ${house} (8th/12th)`;
     } else if (isAngular && isBenefic) {
       grade = 'A';
       reason = `Benefic ${name} in angular house ${house}`;
@@ -111,6 +117,7 @@ function gradePillar2Transits(transits: TransitsResult | null): GradeItem[] {
     if (!isMalefic) continue; // Only malefics are graded for transits
 
     const isAngular = PHEYDRUS_ANGULAR_HOUSES.has(house);
+    const isPressure = PILLAR_2_PRESSURE_HOUSES.has(house);
 
     let grade: PillarGrade = 'Neutral';
     let reason: string;
@@ -118,8 +125,11 @@ function gradePillar2Transits(transits: TransitsResult | null): GradeItem[] {
     if (isAngular) {
       grade = 'F';
       reason = `Malefic transit ${name} in angular house ${house}`;
+    } else if (isPressure) {
+      grade = 'F';
+      reason = `Malefic transit ${name} in pressure house ${house} (2nd/6th/8th/11th)`;
     } else {
-      reason = `Transit ${name} in house ${house} (not angular)`;
+      reason = `Transit ${name} in house ${house} (not angular or pressure)`;
     }
 
     items.push({
@@ -232,9 +242,10 @@ function gradePillar3Address(addressNumerology: AddressNumerologyResult | null):
     const level = addressNumerology.levels.find((l) => l.name === levelName);
     if (!level) continue;
 
-    // Reduce master numbers to single digit for grading
+    // Reduce master numbers to single digit for grading.
+    // Exception: 'Level' (combined unit+building+street) preserves 11 as a master number.
     let num = level.number;
-    if (num > 9) {
+    if (num > 9 && !(levelName === 'Level' && num === 11)) {
       num = reduceToSingleDigitOnly(num);
     }
 
