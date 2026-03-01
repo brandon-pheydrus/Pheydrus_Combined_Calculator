@@ -8,7 +8,7 @@
  * Final grade determined solely by total F count
  */
 
-export type PillarGrade = 'F' | 'A' | 'Neutral';
+export type PillarGrade = 'F' | 'C' | 'A' | 'Neutral';
 export type FinalGrade = 'A' | 'B' | 'D' | 'F';
 
 export type DiagnosticSection =

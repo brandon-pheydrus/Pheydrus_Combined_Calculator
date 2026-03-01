@@ -126,7 +126,7 @@ function gradePillar2Transits(transits: TransitsResult | null): GradeItem[] {
       grade = 'F';
       reason = `Malefic transit ${name} in angular house ${house}`;
     } else if (isPressure) {
-      grade = 'F';
+      grade = 'C';
       reason = `Malefic transit ${name} in pressure house ${house} (2nd/6th/8th/11th)`;
     } else {
       reason = `Transit ${name} in house ${house} (not angular or pressure)`;

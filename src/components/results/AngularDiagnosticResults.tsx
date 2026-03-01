@@ -101,23 +101,24 @@ function FSourcePieChart({ pillars, totalFs }: { pillars: readonly PillarSummary
 
 // ─── House wheel ──────────────────────────────────────────────────────────────
 
-const HOUSE_FILL: Record<'F' | 'A' | 'Neutral', string> = {
+const HOUSE_FILL: Record<'F' | 'C' | 'A' | 'Neutral', string> = {
   F: '#ef4444',
+  C: '#f59e0b',
   A: '#10b981',
   Neutral: '#f3f4f6',
 };
 
-function computeHouseGrades(items: GradeItem[]): Record<number, 'F' | 'A' | 'Neutral'> {
+function computeHouseGrades(items: GradeItem[]): Record<number, 'F' | 'C' | 'A' | 'Neutral'> {
   const map: Record<number, Set<string>> = {};
   for (const item of items) {
     if (item.house === undefined) continue;
     if (!map[item.house]) map[item.house] = new Set();
     map[item.house].add(item.grade);
   }
-  const result: Record<number, 'F' | 'A' | 'Neutral'> = {};
+  const result: Record<number, 'F' | 'C' | 'A' | 'Neutral'> = {};
   for (const [h, grades] of Object.entries(map)) {
     const n = Number(h);
-    result[n] = grades.has('F') ? 'F' : grades.has('A') ? 'A' : 'Neutral';
+    result[n] = grades.has('F') ? 'F' : grades.has('C') ? 'C' : grades.has('A') ? 'A' : 'Neutral';
   }
   return result;
 }
@@ -194,12 +195,14 @@ function HouseWheel({ items }: { items: GradeItem[] }) {
 
 function getGradeItemStyle(grade: GradeItem['grade']): string {
   if (grade === 'F') return 'bg-red-50 border-l-4 border-red-400';
+  if (grade === 'C') return 'bg-amber-50 border-l-4 border-amber-400';
   if (grade === 'A') return 'bg-emerald-50 border-l-4 border-emerald-400';
   return 'bg-gray-50 border-l-4 border-gray-300';
 }
 
 function getGradeBadge(grade: GradeItem['grade']): string {
   if (grade === 'F') return 'bg-red-100 text-red-700';
+  if (grade === 'C') return 'bg-amber-100 text-amber-700';
   if (grade === 'A') return 'bg-emerald-100 text-emerald-700';
   return 'bg-gray-100 text-gray-500';
 }
