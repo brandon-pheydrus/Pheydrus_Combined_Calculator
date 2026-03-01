@@ -45,7 +45,8 @@ export const LIFE_CYCLE_A_YEARS = new Set([5]);
 // ---------------------------------------------------------------------------
 // Address grading
 // ---------------------------------------------------------------------------
-export const ADDRESS_F_NUMBERS = new Set([3, 5, 6, 8, 9]);
+export const ADDRESS_F_NUMBERS = new Set([3, 6, 8, 9]);
+export const ADDRESS_C_NUMBERS = new Set([1, 4, 5]);
 export const ADDRESS_A_NUMBERS = new Set([2, 7]);
 
 // Address level names to grade (from address calculator output)

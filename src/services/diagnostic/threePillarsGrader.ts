@@ -33,6 +33,7 @@ import {
   LIFE_CYCLE_F_YEARS,
   LIFE_CYCLE_A_YEARS,
   ADDRESS_F_NUMBERS,
+  ADDRESS_C_NUMBERS,
   ADDRESS_A_NUMBERS,
   ADDRESS_GRADED_LEVELS,
   computeFinalGrade,
@@ -255,6 +256,9 @@ function gradePillar3Address(addressNumerology: AddressNumerologyResult | null):
     if (ADDRESS_F_NUMBERS.has(num)) {
       grade = 'F';
       reason = `${levelName} number ${num} creates pressure`;
+    } else if (ADDRESS_C_NUMBERS.has(num)) {
+      grade = 'C';
+      reason = `${levelName} number ${num} creates mild pressure`;
     } else if (ADDRESS_A_NUMBERS.has(num)) {
       grade = 'A';
       reason = `${levelName} number ${num} is supportive`;
