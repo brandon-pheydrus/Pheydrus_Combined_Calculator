@@ -55,9 +55,10 @@ export const ADDRESS_GRADED_LEVELS = ['L3'] as const;
 // ---------------------------------------------------------------------------
 // Final grade thresholds
 // ---------------------------------------------------------------------------
-export function computeFinalGrade(totalFs: number): 'A' | 'B' | 'D' | 'F' {
-  if (totalFs >= 10) return 'F';
-  if (totalFs >= 7) return 'D';
-  if (totalFs >= 3) return 'B';
+// Score = (F count × 1) + (C count × 0.5)
+export function computeFinalGrade(score: number): 'A' | 'B' | 'C' | 'F' {
+  if (score > 10) return 'F';
+  if (score >= 7) return 'C';
+  if (score >= 2) return 'B';
   return 'A';
 }

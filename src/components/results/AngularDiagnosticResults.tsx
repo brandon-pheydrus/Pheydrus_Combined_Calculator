@@ -17,7 +17,7 @@ const GRADE_COLORS: Record<
 > = {
   A: { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-400', label: 'Excellent' },
   B: { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-400', label: 'Good' },
-  D: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-400', label: 'Challenging' },
+  C: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-400', label: 'Challenging' },
   F: { bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-400', label: 'Difficult' },
 };
 
@@ -331,11 +331,12 @@ export function AngularDiagnosticResults({ result }: AngularDiagnosticResultsPro
         <div className="px-6 py-3 bg-gray-50 border-t border-gray-200">
           <div className="flex flex-wrap items-center gap-4 text-xs text-[#6b6188]">
             <span className="font-medium">Grade Scale:</span>
-            <span>A = 0-2 F&apos;s</span>
-            <span>B = 3-6 F&apos;s</span>
-            <span>D = 7-9 F&apos;s</span>
-            <span>F = 10+ F&apos;s</span>
-            <span className="ml-auto italic">A&apos;s do not offset F&apos;s</span>
+            <span>A = score &lt; 2</span>
+            <span>B = score 2–6.5</span>
+            <span>C = score 7–10</span>
+            <span>F = score &gt; 10</span>
+            <span className="text-gray-400">(F=1pt, C=0.5pt)</span>
+            <span className="ml-auto italic">A&apos;s do not offset score</span>
           </div>
         </div>
       </div>

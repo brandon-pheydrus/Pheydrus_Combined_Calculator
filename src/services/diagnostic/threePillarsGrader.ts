@@ -317,8 +317,10 @@ export function gradeThreePillars(input: GraderInput): AngularDiagnosticResult {
 
   const allItems = [...p1Items, ...p2aItems, ...p2bItems, ...p3aItems, ...p3bItems];
   const totalFs = allItems.filter((i) => i.grade === 'F').length;
+  const totalCs = allItems.filter((i) => i.grade === 'C').length;
   const totalAs = allItems.filter((i) => i.grade === 'A').length;
-  const finalGrade: FinalGrade = computeFinalGrade(totalFs);
+  const score = totalFs + totalCs * 0.5;
+  const finalGrade: FinalGrade = computeFinalGrade(score);
 
   return {
     pillars: [pillar1, pillar2, pillar3],

@@ -9,7 +9,7 @@
  */
 
 export type PillarGrade = 'F' | 'C' | 'A' | 'Neutral';
-export type FinalGrade = 'A' | 'B' | 'D' | 'F';
+export type FinalGrade = 'A' | 'B' | 'C' | 'F';
 
 export type DiagnosticSection =
   | 'Natal Angular'
