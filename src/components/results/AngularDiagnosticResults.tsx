@@ -146,7 +146,7 @@ function HouseWheel({ items, label }: { items: GradeItem[]; label?: string }) {
       <svg viewBox="0 0 180 180" className="w-32 h-32">
         {Array.from({ length: 12 }, (_, i) => {
           const houseNum = i + 1;
-          const startDeg = (180 + i * 30) % 360;
+          const startDeg = (180 - i * 30 + 360) % 360;
           const midDeg = startDeg + 15;
           const rad = (midDeg * Math.PI) / 180;
           const grade = houseGrades[houseNum] ?? 'Neutral';
