@@ -12,6 +12,7 @@ import type { ClientIntakeData } from '../../models/clientIntake';
 import {
   PREFERRED_SOLUTION_LABELS,
   CURRENT_SITUATION_LABELS,
+  PRIOR_HELP_LABELS,
 } from '../../models/clientIntake';
 
 export function ClientResultsPage() {
@@ -61,6 +62,15 @@ export function ClientResultsPage() {
             )}
             {intake.obstacle && (
               <IntakRow label="Main obstacle" value={intake.obstacle} />
+            )}
+            {intake.patternYear && (
+              <IntakRow label="Pattern noticed since" value={intake.patternYear} />
+            )}
+            {intake.priorHelp.length > 0 && (
+              <IntakRow
+                label="Prior support sought"
+                value={intake.priorHelp.map((o) => PRIOR_HELP_LABELS[o]).join(', ')}
+              />
             )}
             {intake.preferredSolution && (
               <IntakRow

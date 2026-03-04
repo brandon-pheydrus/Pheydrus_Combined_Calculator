@@ -2,10 +2,10 @@
  * ClientAssessmentPage
  * Multi-step intake quiz for the client-facing Pheydrus assessment.
  * Steps:
- *   1 – About You       (name, DOB, time of birth)
+ *   1 – About You       (name, email, phone, DOB, time of birth)
  *   2 – Your Locations  (birth city, current city)
  *   3 – Your Home       (address details, move-in date)
- *   4 – Your Goals      (desired outcome, obstacle)
+ *   4 – Your Challenge  (desired outcome, obstacle, pattern year, prior help)
  *   5 – Your Path       (preferred solution, current situation)
  *   6 – Anything Else   (additional notes + review & submit)
  */
@@ -20,11 +20,13 @@ import type {
   ClientIntakeData,
   PreferredSolution,
   CurrentSituation,
+  PriorHelpOption,
 } from '../../models/clientIntake';
 import {
   EMPTY_CLIENT_INTAKE,
   PREFERRED_SOLUTION_LABELS,
   CURRENT_SITUATION_LABELS,
+  PRIOR_HELP_LABELS,
 } from '../../models/clientIntake';
 
 const TOTAL_STEPS = 6;
@@ -78,7 +80,39 @@ function RadioCard<T extends string>({
       }`}
     >
       <span
-        className={`inline-block w-4 h-4 rounded-full border-2 mr-3 align-middle ${
+        className={`inline-block w-4 h-4 rounded-full border-2 mr-3 align-middle flex-shrink-0 ${
+          selected ? 'border-[#9a7d4e] bg-[#9a7d4e]' : 'border-gray-300 bg-white'
+        }`}
+      />
+      {label}
+    </button>
+  );
+}
+
+// ─── CheckCard (multi-select) ────────────────────────────────────────────────
+function CheckCard({
+  value,
+  label,
+  selected,
+  onToggle,
+}: {
+  value: PriorHelpOption;
+  label: string;
+  selected: boolean;
+  onToggle: (v: PriorHelpOption) => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={() => onToggle(value)}
+      className={`w-full text-left px-5 py-4 rounded-xl border-2 font-medium transition-all ${
+        selected
+          ? 'border-[#9a7d4e] bg-[#9a7d4e]/5 text-[#2d2a3e]'
+          : 'border-gray-200 bg-white text-[#6b6188] hover:border-[#9a7d4e]/50'
+      }`}
+    >
+      <span
+        className={`inline-block w-4 h-4 rounded border-2 mr-3 align-middle flex-shrink-0 ${
           selected ? 'border-[#9a7d4e] bg-[#9a7d4e]' : 'border-gray-300 bg-white'
         }`}
       />
@@ -169,12 +203,29 @@ export function ClientAssessmentPage() {
     setForm((prev) => ({ ...prev, [key]: city }));
   }, []);
 
+  const togglePriorHelp = useCallback((option: PriorHelpOption) => {
+    setIntake((prev) => {
+      const current = prev.priorHelp;
+      const updated = current.includes(option)
+        ? current.filter((o) => o !== option)
+        : [...current, option];
+      return { ...prev, priorHelp: updated };
+    });
+  }, []);
+
   // ── Step validation ────────────────────────────────────────────────────────
   const canProceed = (() => {
     switch (step) {
-      case 1: return !!form.name && !!form.dateOfBirth && !!form.timeOfBirth;
+      case 1:
+        return (
+          !!form.name &&
+          !!intake.email &&
+          !!intake.phone &&
+          !!form.dateOfBirth &&
+          !!form.timeOfBirth
+        );
       case 2: return !!form.birthLocation && !!form.currentLocation;
-      case 3: return true; // address fields are optional; move date is required for context but soft
+      case 3: return true;
       case 4: return !!intake.desiredOutcome && !!intake.obstacle;
       case 5: return !!intake.preferredSolution && !!intake.currentSituation;
       case 6: return true;
@@ -213,12 +264,38 @@ export function ClientAssessmentPage() {
             <p className={subClass}>This information powers your astrological analysis.</p>
             <div className="space-y-5">
               <div>
-                <label className={labelClass}>Your name</label>
+                <label className={labelClass}>
+                  Your name <span className="text-[#9a7d4e]">*</span>
+                </label>
                 <input
                   type="text"
                   value={form.name}
                   onChange={(e) => setField('name', e.target.value)}
                   placeholder="First name is fine"
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className={labelClass}>
+                  Email address <span className="text-[#9a7d4e]">*</span>
+                </label>
+                <input
+                  type="email"
+                  value={intake.email}
+                  onChange={(e) => setIntakeField('email', e.target.value)}
+                  placeholder="you@example.com"
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className={labelClass}>
+                  Phone number <span className="text-[#9a7d4e]">*</span>
+                </label>
+                <input
+                  type="tel"
+                  value={intake.phone}
+                  onChange={(e) => setIntakeField('phone', e.target.value)}
+                  placeholder="+1 (555) 000-0000"
                   className={inputClass}
                 />
               </div>
@@ -349,22 +426,22 @@ export function ClientAssessmentPage() {
           </div>
         );
 
-      // ── Step 4: Goals ────────────────────────────────────────────────────
+      // ── Step 4: Challenge ────────────────────────────────────────────────
       case 4:
         return (
           <div>
-            <p className={questionClass}>What do you want to achieve in the next 90 days?</p>
+            <p className={questionClass}>What's holding you back?</p>
             <p className={subClass}>Be as specific as possible — this helps us tailor your report.</p>
             <div className="space-y-6">
               <div>
                 <label className={labelClass}>
-                  My desired outcome <span className="text-[#9a7d4e]">*</span>
+                  What is your desired outcome in the next 90 days? <span className="text-[#9a7d4e]">*</span>
                 </label>
                 <textarea
                   value={intake.desiredOutcome}
                   onChange={(e) => setIntakeField('desiredOutcome', e.target.value)}
                   placeholder="Describe what success looks like for you in the next 90 days…"
-                  rows={4}
+                  rows={3}
                   className={inputClass}
                 />
               </div>
@@ -376,9 +453,40 @@ export function ClientAssessmentPage() {
                   value={intake.obstacle}
                   onChange={(e) => setIntakeField('obstacle', e.target.value)}
                   placeholder="Be honest — what keeps getting in the way?"
-                  rows={4}
+                  rows={3}
                   className={inputClass}
                 />
+              </div>
+              <div>
+                <label className={labelClass}>
+                  What year did you first notice the recurring pattern connected to your current obstacle?
+                </label>
+                <input
+                  type="text"
+                  value={intake.patternYear}
+                  onChange={(e) => setIntakeField('patternYear', e.target.value)}
+                  placeholder="e.g., 2018"
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className={labelClass}>
+                  What support have you already sought for this challenge?{' '}
+                  <span className="text-gray-400 font-normal">(Select all that apply)</span>
+                </label>
+                <div className="space-y-3">
+                  {(Object.entries(PRIOR_HELP_LABELS) as [PriorHelpOption, string][]).map(
+                    ([value, label]) => (
+                      <CheckCard
+                        key={value}
+                        value={value}
+                        label={label}
+                        selected={intake.priorHelp.includes(value)}
+                        onToggle={togglePriorHelp}
+                      />
+                    )
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -451,11 +559,22 @@ export function ClientAssessmentPage() {
               <div className="bg-[#f8f6f0] border border-[#e8e0d0] rounded-xl p-5 space-y-2 text-sm">
                 <p className="font-bold text-[#2d2a3e] mb-3">Review your details</p>
                 <Row label="Name" value={form.name || '—'} />
+                <Row label="Email" value={intake.email || '—'} />
+                <Row label="Phone" value={intake.phone || '—'} />
                 <Row label="Date of birth" value={form.dateOfBirth || '—'} />
                 <Row label="Time of birth" value={form.timeOfBirth || '—'} />
                 <Row label="Birth city" value={form.birthLocation?.name || '—'} />
                 <Row label="Current city" value={form.currentLocation?.name || '—'} />
                 <Row label="Moved to address" value={intake.addressMoveDate || '—'} />
+                <Row label="Pattern since" value={intake.patternYear || '—'} />
+                <Row
+                  label="Prior support"
+                  value={
+                    intake.priorHelp.length > 0
+                      ? intake.priorHelp.map((o) => PRIOR_HELP_LABELS[o]).join(', ')
+                      : '—'
+                  }
+                />
                 <Row
                   label="Solution preference"
                   value={
@@ -488,7 +607,9 @@ export function ClientAssessmentPage() {
         {/* Brand header */}
         <div className="text-center mb-10">
           <h1 className="text-3xl font-bold text-[#2d2a3e] tracking-tight">Pheydrus Assessment</h1>
-          <p className="text-[#6b6188] mt-1 text-sm">Personalized 3-Pillar Analysis</p>
+          <p className="text-[#6b6188] mt-1 text-sm">
+            Personalized 3-Pillar Analysis &nbsp;·&nbsp; Quiz takes ~4 min
+          </p>
         </div>
 
         {/* Card */}

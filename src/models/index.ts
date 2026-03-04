@@ -76,7 +76,9 @@ export {
   type ClientIntakeData,
   type PreferredSolution,
   type CurrentSituation,
+  type PriorHelpOption,
   EMPTY_CLIENT_INTAKE,
   PREFERRED_SOLUTION_LABELS,
   CURRENT_SITUATION_LABELS,
+  PRIOR_HELP_LABELS,
 } from './clientIntake';
