@@ -70,3 +70,13 @@ export {
   serializeFormData,
   deserializeFormData,
 } from './form';
+
+// Re-export client intake models
+export {
+  type ClientIntakeData,
+  type PreferredSolution,
+  type CurrentSituation,
+  EMPTY_CLIENT_INTAKE,
+  PREFERRED_SOLUTION_LABELS,
+  CURRENT_SITUATION_LABELS,
+} from './clientIntake';
