@@ -111,7 +111,7 @@ const F_INTERP: Record<string, Partial<Record<number, { career: string; love: st
       career:
         'Pluto in your career house creates a battlefield around professional power. The unconscious pattern: you either obsessively chase authority or destroy your own career just as it peaks — through reputation crises, public conflict, or radical pivots that rebuild from zero. Sustained success requires mastering the internal destroyer before it dismantles what you build.',
       love:
-        'Pluto in your career house creates a career obsession that crowds out space for genuine love. The relentless drive for professional transformation leaves relationships perpetually deprioritized — and partners who feel they\'ll never come first eventually stop waiting.',
+        'Pluto in your career house creates a career obsession that crowds out space for genuine love. The relentless drive for professional transformation leaves relationships perpetually deprioritized — and partners who feel they'll never come first eventually stop waiting.',
     },
   },
   Saturn: {
@@ -119,13 +119,13 @@ const F_INTERP: Record<string, Partial<Record<number, { career: string; love: st
       career:
         'Saturn in your first house builds an armored exterior that professionally reads as cold, difficult, or simply too serious to collaborate with easily. Despite often being the most reliable person in the room, the emotional distance you project keeps career relationships from deepening into the opportunities that actually scale a career.',
       love:
-        'Saturn in your first house builds walls that read as self-sufficiency but function as romantic isolation. You project "I don\'t need love" — which creates the very loneliness you\'re trying to avoid. Partners sense they can\'t truly reach you and, after enough attempts, stop trying.',
+        'Saturn in your first house builds walls that read as self-sufficiency but function as romantic isolation. You project "I don't need love" — which creates the very loneliness you're trying to avoid. Partners sense they can't truly reach you and, after enough attempts, stop trying.',
     },
     5: {
       career:
         'Saturn in your fifth house suppresses the creative spontaneity and playful risk-taking that innovative career moves require. The fear of failure has you over-editing and under-delivering — keeping your creative contributions perpetually in draft form rather than the marketplace where they could actually advance your career.',
       love:
-        'Saturn in your romance house puts a heavy hand on spontaneity, vulnerability, and the playfulness that attracts connection. The deep fear of rejection makes you hold back exactly when opening up would create something real — keeping love at arm\'s length just as it could land.',
+        'Saturn in your romance house puts a heavy hand on spontaneity, vulnerability, and the playfulness that attracts connection. The deep fear of rejection makes you hold back exactly when opening up would create something real — keeping love at arm's length just as it could land.',
     },
     7: {
       career:
@@ -143,21 +143,21 @@ const F_INTERP: Record<string, Partial<Record<number, { career: string; love: st
   Uranus: {
     1: {
       career:
-        'Uranus in your first house creates an erratic professional presence — the version of you who shows up today may be markedly different from tomorrow\'s. Career advancement requires sustained trust-building, and inconsistency in how you present undermines that foundation at every stage.',
+        'Uranus in your first house creates an erratic professional presence — the version of you who shows up today may be markedly different from tomorrow's. Career advancement requires sustained trust-building, and inconsistency in how you present undermines that foundation at every stage.',
       love:
-        'Uranus in your first house creates unpredictable availability in love — brilliantly present one moment, completely detached the next. Partners can\'t build a foundation because they never know which version of you will appear. The inconsistency that feels like freedom to you registers as abandonment to those who want to love you.',
+        'Uranus in your first house creates unpredictable availability in love — brilliantly present one moment, completely detached the next. Partners can't build a foundation because they never know which version of you will appear. The inconsistency that feels like freedom to you registers as abandonment to those who want to love you.',
     },
     5: {
       career:
         'Uranus in your fifth house drives explosive creative starts followed by sudden loss of interest before completion. The pattern of brilliant beginnings and abandoned follow-through creates a professional reputation for inconsistency that directly undermines advancement and client trust.',
       love:
-        'Uranus in your romance house creates a cycle of thrilling starts followed by sudden departures — either you lose interest when novelty fades, or your energy signals "I\'ll leave" before you do, and partners pull back first. Love never gets the sustained attention needed to deepen.',
+        'Uranus in your romance house creates a cycle of thrilling starts followed by sudden departures — either you lose interest when novelty fades, or your energy signals "I'll leave" before you do, and partners pull back first. Love never gets the sustained attention needed to deepen.',
     },
     7: {
       career:
         'Uranus in your partnership house creates volatile business relationships — sudden breakdowns, unexpected betrayals, and an unconscious pattern of sabotaging collaborations just as they begin producing results. The instability limits the compounding growth that sustained alliances create.',
       love:
-        'Uranus in your partnership house creates a freedom-vs-intimacy war that plays out in relationship after relationship. The unconscious pattern: you get close, feel trapped, and pull back — or partners sense your detachment and leave first. Sustainable love requires an architecture of closeness that doesn\'t feel like confinement.',
+        'Uranus in your partnership house creates a freedom-vs-intimacy war that plays out in relationship after relationship. The unconscious pattern: you get close, feel trapped, and pull back — or partners sense your detachment and leave first. Sustainable love requires an architecture of closeness that doesn't feel like confinement.',
     },
     10: {
       career:
@@ -169,7 +169,7 @@ const F_INTERP: Record<string, Partial<Record<number, { career: string; love: st
   Mars: {
     1: {
       career:
-        'Mars in your first house projects combative energy that others often experience as aggression before you\'ve said anything contentious. In career contexts, this creates friction before trust is established — potential partners, employers, and collaborators sense the raw Mars energy and approach cautiously or simply avoid the potential conflict.',
+        'Mars in your first house projects combative energy that others often experience as aggression before you've said anything contentious. In career contexts, this creates friction before trust is established — potential partners, employers, and collaborators sense the raw Mars energy and approach cautiously or simply avoid the potential conflict.',
       love:
         'Mars in your first house signals "compete with me" rather than "connect with me" in romantic contexts. You attract partners who can match your intensity, but the continuous competition means the relationship spends more energy fighting than building anything lasting.',
     },
@@ -187,7 +187,7 @@ const F_INTERP: Record<string, Partial<Record<number, { career: string; love: st
     },
     10: {
       career:
-        'Mars in your career house drives aggressive career tactics that build enemies in high places faster than allies. The warrior energy that could propel your career forward instead generates reputation damage when you force outcomes before they\'re ready — creating a cycle of advancement followed by setback.',
+        'Mars in your career house drives aggressive career tactics that build enemies in high places faster than allies. The warrior energy that could propel your career forward instead generates reputation damage when you force outcomes before they're ready — creating a cycle of advancement followed by setback.',
       love:
         'Mars in your career house creates a competitive, achievement-driven energy that bleeds into your love life — turning romance into another arena to conquer rather than a place to surrender and be known. Partners eventually tire of feeling like a goal to achieve rather than a companion to be with.',
     },
@@ -195,9 +195,9 @@ const F_INTERP: Record<string, Partial<Record<number, { career: string; love: st
   Neptune: {
     1: {
       career:
-        'Neptune in your first house makes your professional self difficult to read — you project one persona while experiencing something entirely different internally. This authenticity gap erodes the consistent, trustworthy presence that career advancement and professional relationships require. Others sense the disconnect even when they can\'t articulate it.',
+        'Neptune in your first house makes your professional self difficult to read — you project one persona while experiencing something entirely different internally. This authenticity gap erodes the consistent, trustworthy presence that career advancement and professional relationships require. Others sense the disconnect even when they can't articulate it.',
       love:
-        'Neptune in your first house makes your true self nearly invisible in romantic contexts — you naturally mirror what partners want to see rather than revealing who you actually are. Connections built on a version of you that doesn\'t exist inevitably collapse when reality surfaces, leaving both parties confused about what happened.',
+        'Neptune in your first house makes your true self nearly invisible in romantic contexts — you naturally mirror what partners want to see rather than revealing who you actually are. Connections built on a version of you that doesn't exist inevitably collapse when reality surfaces, leaving both parties confused about what happened.',
     },
     5: {
       career:
@@ -207,13 +207,13 @@ const F_INTERP: Record<string, Partial<Record<number, { career: string; love: st
     },
     7: {
       career:
-        'Neptune in your partnership house creates fog around business relationships and contractual commitments. Whether being deceived by partners or deceiving yourself about what a collaboration actually is, the illusion-based approach to professional relationships leads to agreements that don\'t hold and partnerships that dissolve without warning.',
+        'Neptune in your partnership house creates fog around business relationships and contractual commitments. Whether being deceived by partners or deceiving yourself about what a collaboration actually is, the illusion-based approach to professional relationships leads to agreements that don't hold and partnerships that dissolve without warning.',
       love:
-        'Neptune in your partnership house is the classic indicator of love built on projection. You don\'t fall in love with who your partner is — you fall in love with who you need them to be. When the fog lifts, you\'re left with a stranger rather than a partner, and the cycle of idealized beginnings and disillusioned endings continues.',
+        'Neptune in your partnership house is the classic indicator of love built on projection. You don't fall in love with who your partner is — you fall in love with who you need them to be. When the fog lifts, you're left with a stranger rather than a partner, and the cycle of idealized beginnings and disillusioned endings continues.',
     },
     10: {
       career:
-        'Neptune in your career house creates a blurry professional identity — your public face and private self don\'t align, generating an inconsistency that erodes credibility over time. The confusion about what you actually want professionally keeps you drifting between paths, never committing long enough for momentum to build.',
+        'Neptune in your career house creates a blurry professional identity — your public face and private self don't align, generating an inconsistency that erodes credibility over time. The confusion about what you actually want professionally keeps you drifting between paths, never committing long enough for momentum to build.',
       love:
         'Neptune in your career house creates a pattern of pouring all creative and spiritual energy into professional dreams while real love waits indefinitely. The career becomes the idealized partnership — and actual romantic relationships can never compete with an imagined professional destiny.',
     },
@@ -221,9 +221,9 @@ const F_INTERP: Record<string, Partial<Record<number, { career: string; love: st
   Sun: {
     8: {
       career:
-        'The Sun — your core vitality and identity — sits in the house of hidden power and shared resources. This creates a persistent pattern of giving your power away in partnerships and financial agreements, or keeping your authentic capabilities hidden just as they\'d be most rewarded. The solar force that drives career success is trapped behind a veil of self-doubt around your fundamental worth.',
+        'The Sun — your core vitality and identity — sits in the house of hidden power and shared resources. This creates a persistent pattern of giving your power away in partnerships and financial agreements, or keeping your authentic capabilities hidden just as they'd be most rewarded. The solar force that drives career success is trapped behind a veil of self-doubt around your fundamental worth.',
       love:
-        'The Sun in your house of transformation creates deep self-worth struggles that play out through intimate relationships. You may unconsciously choose partners who diminish your light, or withdraw your authentic self just as love deepens — creating relationships where you\'re never truly seen.',
+        'The Sun in your house of transformation creates deep self-worth struggles that play out through intimate relationships. You may unconsciously choose partners who diminish your light, or withdraw your authentic self just as love deepens — creating relationships where you're never truly seen.',
     },
     12: {
       career:
@@ -241,9 +241,9 @@ const F_INTERP: Record<string, Partial<Record<number, { career: string; love: st
     },
     12: {
       career:
-        'Venus in your house of hidden things places your financial magnetism, creative talent, and professional appeal in the shadows. The gifts and skills that would most advance your career stay hidden — from self-doubt, unconscious self-sabotage, or simply not yet claiming what you\'re actually worth.',
+        'Venus in your house of hidden things places your financial magnetism, creative talent, and professional appeal in the shadows. The gifts and skills that would most advance your career stay hidden — from self-doubt, unconscious self-sabotage, or simply not yet claiming what you're actually worth.',
       love:
-        'Venus in your twelfth house creates a hidden love life — longing for connection that you\'re never quite willing to fully pursue, love that remains unrequited, or keeping your most attractive qualities in reserve for a moment of safety that never quite arrives.',
+        'Venus in your twelfth house creates a hidden love life — longing for connection that you're never quite willing to fully pursue, love that remains unrequited, or keeping your most attractive qualities in reserve for a moment of safety that never quite arrives.',
     },
   },
 };
@@ -253,19 +253,19 @@ const F_INTERP: Record<string, Partial<Record<number, { career: string; love: st
 const TRANSIT_C_INTERP: Record<string, Partial<Record<number, (year: number) => string>>> = {
   Pluto: {
     2: (y) =>
-      `Pluto is transiting your financial house through ${y} — either a period of wealth destruction or profound financial transformation. Shadow path: obsessive, all-or-nothing financial behavior that creates as much scarcity as it resolves. Conscious path: using Pluto\'s transformative power to permanently upgrade your relationship with money, eliminating financial patterns that have been limiting you long before this transit.`,
+      `Pluto is transiting your financial house through ${y} — either a period of wealth destruction or profound financial transformation. Shadow path: obsessive, all-or-nothing financial behavior that creates as much scarcity as it resolves. Conscious path: using Pluto's transformative power to permanently upgrade your relationship with money, eliminating financial patterns that have been limiting you long before this transit.`,
     6: (y) =>
       `Pluto is transiting your work house through ${y}. Shadow: obsessive work patterns, power struggles with employees or clients, burning systems before they can produce results. Conscious path: fundamentally transforming how you work — eliminating the performative busyness and rebuilding your daily structure around your highest-power activities exclusively.`,
     8: (y) =>
-      `Pluto is transiting your shared resources house through ${y}. Shadow: financial power struggles with partners, destructive cycles in joint ventures, all-or-nothing energy around other people\'s money. Conscious path: transforming your relationship with shared capital — becoming someone who can attract, manage, and multiply resources at a new level of mastery.`,
+      `Pluto is transiting your shared resources house through ${y}. Shadow: financial power struggles with partners, destructive cycles in joint ventures, all-or-nothing energy around other people's money. Conscious path: transforming your relationship with shared capital — becoming someone who can attract, manage, and multiply resources at a new level of mastery.`,
     11: (y) =>
       `Pluto is transiting your networks and goals house through ${y}. Shadow: power struggles in professional communities, destroying networks before they bear fruit. Conscious path: permanently upgrading your professional circle — releasing relationships that no longer serve your evolution and cultivating the deep, powerful alliances that can actually move your career forward.`,
   },
   Saturn: {
     2: (y) =>
-      `Saturn is transiting your financial house through ${y} — a period that creates either a financial ceiling of your own making, or the most durable wealth foundation you\'ve ever built. Shadow: scarcity mindset, self-worth blocks that cap income, restriction without reward. Conscious path: disciplined financial systems, charging your actual worth, and playing the long game. Saturn rewards the committed — the gate between paths is discipline without self-punishment.`,
+      `Saturn is transiting your financial house through ${y} — a period that creates either a financial ceiling of your own making, or the most durable wealth foundation you've ever built. Shadow: scarcity mindset, self-worth blocks that cap income, restriction without reward. Conscious path: disciplined financial systems, charging your actual worth, and playing the long game. Saturn rewards the committed — the gate between paths is discipline without self-punishment.`,
     6: (y) =>
-      `Saturn is transiting your work house through ${y}. Shadow: burnout from overwork, chronic underrecognition despite output, perfectionism that stalls more than it improves. Conscious path: building the most efficient, disciplined daily work structure you\'ve ever had — identifying the 20% of effort that produces 80% of results and ruthlessly focusing there.`,
+      `Saturn is transiting your work house through ${y}. Shadow: burnout from overwork, chronic underrecognition despite output, perfectionism that stalls more than it improves. Conscious path: building the most efficient, disciplined daily work structure you've ever had — identifying the 20% of effort that produces 80% of results and ruthlessly focusing there.`,
     8: (y) =>
       `Saturn is in your shared resources house through ${y}. Shadow: blocked access to capital and financial partnerships, fear of financial dependency keeping you isolated from investment that could scale your work. Conscious path: building structured, trustworthy financial partnerships with clear agreements — the kind that attract serious investors because the rigor you bring signals reliability.`,
     11: (y) =>
@@ -273,23 +273,23 @@ const TRANSIT_C_INTERP: Record<string, Partial<Record<number, (year: number) => 
   },
   Uranus: {
     2: (y) =>
-      `Uranus is disrupting your financial house through ${y}. Shadow: erratic income cycles, impulsive financial decisions, chronic inability to accumulate wealth as money patterns destabilize just as they form. Conscious path: becoming Uranian in your income approach — innovating revenue streams, monetizing your unconventional thinking, and accepting that your financial life will never look traditional — nor should it. Uranus in the 2nd doesn\'t reward conventional income strategies; it rewards innovation.`,
+      `Uranus is disrupting your financial house through ${y}. Shadow: erratic income cycles, impulsive financial decisions, chronic inability to accumulate wealth as money patterns destabilize just as they form. Conscious path: becoming Uranian in your income approach — innovating revenue streams, monetizing your unconventional thinking, and accepting that your financial life will never look traditional — nor should it. Uranus in the 2nd doesn't reward conventional income strategies; it rewards innovation.`,
     6: (y) =>
       `Uranus is disrupting your daily work routines through ${y}. Shadow: inconsistent output, rebellion against structure that reads as unreliability. Conscious path: innovating how you work — rejecting standard procedures that waste your time and building work systems around your unique intelligence that would look chaotic to others but produce exceptional results for you.`,
     8: (y) =>
       `Uranus is disrupting your shared resources house through ${y}. Shadow: volatile business partnerships, sudden losses from joint ventures. Conscious path: pioneering unconventional approaches to financial partnerships — attracting Uranian investors and collaborators who match your visionary energy and co-creating innovative financial structures that conventional partnerships cannot access.`,
     11: (y) =>
-      `Uranus is disrupting your networks and goals house through ${y}. Shadow: unstable communities, sudden loss of allies, chaotic group dynamics. Conscious path: leading the disruption — becoming the visionary within your field whose unconventional ideas attract other innovators and reshape the communities you\'re part of toward something genuinely new.`,
+      `Uranus is disrupting your networks and goals house through ${y}. Shadow: unstable communities, sudden loss of allies, chaotic group dynamics. Conscious path: leading the disruption — becoming the visionary within your field whose unconventional ideas attract other innovators and reshape the communities you're part of toward something genuinely new.`,
   },
   Neptune: {
     2: (y) =>
-      `Neptune is transiting your financial house through ${y}. Shadow: chronic confusion around money — unclear rates, boundary violations in financial agreements, self-deception about the true state of your finances. Conscious path: aligning your income with your deepest values and creative vision, charging what your work is genuinely worth from a place of spiritual clarity about what you offer and what it\'s actually worth in the world.`,
+      `Neptune is transiting your financial house through ${y}. Shadow: chronic confusion around money — unclear rates, boundary violations in financial agreements, self-deception about the true state of your finances. Conscious path: aligning your income with your deepest values and creative vision, charging what your work is genuinely worth from a place of spiritual clarity about what you offer and what it's actually worth in the world.`,
     6: (y) =>
       `Neptune is in your work house through ${y}. Shadow: unclear work responsibilities, fuzzy boundaries with collaborators, escapism from practical demands. Conscious path: infusing your daily work with creative vision and genuine meaning — letting Neptune lift your output from transaction to mission, making the quality of your work a direct expression of your highest self.`,
     8: (y) =>
       `Neptune is in your shared resources house through ${y}. Shadow: financial confusion and potential deception in partnerships. Conscious path: building partnerships based on genuine alignment of values, with eyes-open clarity about what each party is actually contributing and receiving.`,
     11: (y) =>
-      `Neptune is in your networks and dreams house through ${y}. Shadow: idealizing what your community could be, followed by disillusionment when reality falls short. Conscious path: building community around genuine shared purpose — using Neptune\'s transcendent energy to inspire others toward a vision they couldn\'t see without you.`,
+      `Neptune is in your networks and dreams house through ${y}. Shadow: idealizing what your community could be, followed by disillusionment when reality falls short. Conscious path: building community around genuine shared purpose — using Neptune's transcendent energy to inspire others toward a vision they couldn't see without you.`,
   },
 };
 
@@ -361,7 +361,7 @@ export function getAddressInterpretation(item: GradeItem, goal: GoalCategory): s
 
   if (item.grade === 'F') {
     if (num === 3) return `Your address vibrates at 3 — scattered creative energy that dissipates the focused momentum your ${gw} require. This environment tends to amplify social distraction and creative overwhelm rather than producing the goal-oriented action you need right now.`;
-    if (num === 6) return `Your address vibrates at 6 — a heavy responsibility and family-service energy that persistently pulls your attention toward others\' needs. This environment actively works against the self-focused drive that advancing your ${gw} requires.`;
+    if (num === 6) return `Your address vibrates at 6 — a heavy responsibility and family-service energy that persistently pulls your attention toward others' needs. This environment actively works against the self-focused drive that advancing your ${gw} requires.`;
     if (num === 8) return `Your address vibrates at 8 — intense material pressure and power dynamics that create a constant undercurrent of financial stress and striving. The 8 environment demands you prove your worthiness for abundance at every turn, creating an exhausting context for pursuing your ${gw}.`;
     if (num === 9) return `Your address vibrates at 9 — a completion and dissolution energy that subtly works against building and sustaining. For someone working toward ${gw}, a 9 address creates an environment that encourages release over accumulation, endings over new beginnings.`;
     return `Your address number ${num ?? '—'} (${theme}) is creating environmental friction that directly affects your ${gw}. The numerological pressure here works against the stable, forward-moving energy you need.`;
@@ -388,7 +388,7 @@ export function getAddressInterpretation(item: GradeItem, goal: GoalCategory): s
 
 export function getLifeCycleInterpretation(item: GradeItem): string {
   if (item.grade === 'F') {
-    return `Your current personal year carries a heavy numerological charge — a cycle associated with pressure, intensity, and karmic reckoning. This is a year where the universe tends to surface what needs to be faced rather than supporting what you\'re trying to build. Pushing hard against this cycle tends to amplify resistance; moving through what it\'s forcing you to confront is how you generate real forward motion.`;
+    return `Your current personal year carries a heavy numerological charge — a cycle associated with pressure, intensity, and karmic reckoning. This is a year where the universe tends to surface what needs to be faced rather than supporting what you're trying to build. Pushing hard against this cycle tends to amplify resistance; moving through what it's forcing you to confront is how you generate real forward motion.`;
   }
   if (item.grade === 'A') {
     return `Your current personal year is a highly supportive numerological cycle — associated with positive movement, change, and the manifestation of long-held intentions. The energetic conditions this year actively work in your favor.`;
@@ -420,7 +420,7 @@ function fallbackF(planet: string, house: number, goal: GoalCategory): string {
   const pt = PLANET_BRIEF[planet] ?? 'challenging planetary energy';
   const ht = HOUSE_BRIEF[house] ?? `house ${house}`;
   const g = goal === 'love' ? 'love and relationship goals' : 'career and financial goals';
-  return `${planet}'s energy of ${pt} in your ${ht} house creates persistent pressure on your ${g}. Until this energy is consciously mastered, it acts as a recurring drag on the progress you\'re working toward.`;
+  return `${planet}'s energy of ${pt} in your ${ht} house creates persistent pressure on your ${g}. Until this energy is consciously mastered, it acts as a recurring drag on the progress you're working toward.`;
 }
 
 function fallbackC(planet: string, house: number, goal: GoalCategory, dur: string): string {
