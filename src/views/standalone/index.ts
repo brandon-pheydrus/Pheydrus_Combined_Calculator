@@ -6,3 +6,4 @@ export { AdvancedNumerologyPage } from './AdvancedNumerologyPage';
 export { NatalChartPage } from './NatalChartPage';
 export { RelocationPage } from './RelocationPage';
 export { FengShuiPage } from './FengShuiPage';
+export { AstrocartographyPage } from './AstrocartographyPage';

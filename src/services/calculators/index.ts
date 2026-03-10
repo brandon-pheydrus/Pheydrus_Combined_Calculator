@@ -27,6 +27,12 @@ export {
   getAddressNumerologySummary,
 } from './addressNumerologyCalculator';
 
+// Astrocartography Calculator
+export {
+  calculateAstrocartography,
+  validateAstrocartographyInput,
+} from './astrocartographyCalculator';
+
 // Re-export types
 export type {
   TransitsInput,
@@ -39,4 +45,6 @@ export type {
   RelocationResult,
   AddressNumerologyInput,
   AddressNumerologyResult,
+  AstrocartographyInput,
+  AstrocartographyResult,
 } from '../../models/calculators';

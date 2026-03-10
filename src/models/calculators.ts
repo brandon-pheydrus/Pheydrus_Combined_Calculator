@@ -278,3 +278,33 @@ export type Zodiacs =
   | 'Rooster'
   | 'Dog'
   | 'Pig';
+
+// ============================================================================
+// ASTROCARTOGRAPHY CALCULATOR
+// ============================================================================
+
+export interface AstrocartographyInput {
+  year: number;
+  month: number;
+  day: number;
+  hour: number;
+  minute: number;
+  birthTimeZone: string;
+}
+
+export interface AstrocartographyPoint {
+  latitude: number;
+  longitude: number;
+  orb: number;
+  region: string;
+}
+
+export interface AstrocartographyLine {
+  planet: string;
+  angle: 'ASC' | 'DSC' | 'MC' | 'IC';
+  points: AstrocartographyPoint[];
+}
+
+export interface AstrocartographyResult {
+  lines: AstrocartographyLine[];
+}
