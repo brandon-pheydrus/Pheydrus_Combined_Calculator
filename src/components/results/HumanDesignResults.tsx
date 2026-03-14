@@ -122,7 +122,7 @@ export function HumanDesignResults({ result }: Props) {
       {/* ── Hero banner ── */}
       <div className="bg-gradient-to-br from-[#2d2a3e] to-[#4a4560] rounded-2xl p-6 text-white">
         <p className="text-xs font-semibold uppercase tracking-widest text-[#c9b99a] mb-2">
-          Your Business Energy Blueprint
+          Your Human Design Chart
         </p>
         <div className="flex flex-wrap items-center gap-3 mb-3">
           <h2 className="text-3xl font-bold">{type}</h2>
@@ -160,11 +160,11 @@ export function HumanDesignResults({ result }: Props) {
               <p className={VALUE}>{typeInfo.notSelf}</p>
             </div>
             <div>
-              <p className={LABEL}>Business Role</p>
+              <p className={LABEL}>Role</p>
               <p className={BODY}>{typeInfo.businessRole}</p>
             </div>
             <div className="bg-[#9a7d4e]/10 border border-[#9a7d4e]/20 rounded-xl p-4">
-              <p className={LABEL}>Business Tip</p>
+              <p className={LABEL}>Tip</p>
               <p className={BODY}>{typeInfo.businessTip}</p>
             </div>
           </div>
@@ -185,7 +185,7 @@ export function HumanDesignResults({ result }: Props) {
               <p className={BODY}>{authorityInfo.description}</p>
             </div>
             <div className="bg-[#9a7d4e]/10 border border-[#9a7d4e]/20 rounded-xl p-4">
-              <p className={LABEL}>Making Business Decisions</p>
+              <p className={LABEL}>Decision Making</p>
               <p className={BODY}>{authorityInfo.businessDecision}</p>
             </div>
           </div>
@@ -195,18 +195,18 @@ export function HumanDesignResults({ result }: Props) {
       {/* ── Profile ── */}
       {profileInfo && (
         <div className={SECTION}>
-          <h3 className={SECTION_TITLE}>🎭 Business Profile</h3>
+          <h3 className={SECTION_TITLE}>🎭 Profile</h3>
           <div className="space-y-3">
             <div>
               <p className={LABEL}>Profile</p>
               <p className={VALUE}>{profile} — {profileInfo.name}</p>
             </div>
             <div>
-              <p className={LABEL}>Business Archetype</p>
+              <p className={LABEL}>Archetype</p>
               <p className={VALUE}>{profileInfo.businessArchetype}</p>
             </div>
             <div className="bg-[#9a7d4e]/10 border border-[#9a7d4e]/20 rounded-xl p-4">
-              <p className={LABEL}>Business Tip</p>
+              <p className={LABEL}>Tip</p>
               <p className={BODY}>{profileInfo.businessTip}</p>
             </div>
           </div>

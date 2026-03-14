@@ -1,6 +1,5 @@
 /**
- * Standalone Business Energy Blueprint calculator at /business-energy-blueprint
- * Combines Human Design chart calculation with business-oriented interpretations.
+ * Standalone Human Design Chart calculator at /pheydrus-HD
  */
 
 import { useState } from 'react';
@@ -55,8 +54,8 @@ export function BusinessEnergyBlueprintPage() {
 
   return (
     <StandalonePageWrapper
-      title="Business Energy Blueprint"
-      subtitle="Discover your Human Design type, authority, and profile — decoded for business strategy."
+      title="Human Design Chart"
+      subtitle="Discover your Human Design type, authority, and profile."
     >
       <div className="space-y-6">
 
@@ -64,8 +63,7 @@ export function BusinessEnergyBlueprintPage() {
         <div className="bg-gradient-to-r from-[#9a7d4e]/10 to-[#4a4560]/10 rounded-xl border border-[#9a7d4e]/20 p-4">
           <p className="text-sm text-[#4a4560] leading-relaxed">
             Human Design combines the I-Ching, Kabbalah, chakra system, and quantum physics
-            to map your energetic blueprint. Enter your exact birth data below to receive
-            your personalized business strategy guide.
+            to map your unique energetic blueprint. Enter your exact birth data below.
           </p>
         </div>
 
@@ -106,7 +104,7 @@ export function BusinessEnergyBlueprintPage() {
           disabled={!isReady || isCalculating}
           className="w-full py-3 bg-[#9a7d4e] hover:bg-[#b8944a] text-white font-bold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isCalculating ? 'Calculating your blueprint...' : 'Generate My Business Energy Blueprint'}
+          {isCalculating ? 'Calculating your chart...' : 'Generate My Human Design Chart'}
         </button>
 
         {error && (
