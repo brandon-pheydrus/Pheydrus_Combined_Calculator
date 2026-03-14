@@ -314,6 +314,30 @@ export function ClientResultsPage() {
     ? (PREFERRED_SOLUTION_LABELS[intake.preferredSolution] ?? intake.preferredSolution)
     : null;
 
+  // ── Calendly CTA eligibility ────────────────────────────────────────────────
+  const { finalGrade } = results.diagnostic!;
+  const desiredOutcomeWordCount = intake.desiredOutcome.trim().split(/\s+/).filter(Boolean).length;
+  const soughtTherapyOrCoaches =
+    intake.priorHelp.includes('therapy') || intake.priorHelp.includes('coaches');
+  const notMonetizing = intake.currentSituation !== 'monetizing';
+  const scoredCOrWorse = finalGrade === 'C' || finalGrade === 'F';
+  const showCalendlyCTA =
+    desiredOutcomeWordCount > 1 && soughtTherapyOrCoaches && notMonetizing && scoredCOrWorse;
+
+  // Active pillars (have at least one F or C)
+  const activePillars: number[] = [];
+  if (p1.fCount + p1.cCount > 0) activePillars.push(1);
+  if (p2.fCount + p2.cCount > 0) activePillars.push(2);
+  if (p3.fCount + p3.cCount > 0) activePillars.push(3);
+  const pillarListText =
+    activePillars.length === 0
+      ? ''
+      : activePillars.length === 1
+        ? `Pillar ${activePillars[0]}`
+        : activePillars.length === 2
+          ? `Pillars ${activePillars[0]} and ${activePillars[1]}`
+          : `Pillars 1, 2, and 3`;
+
   const pillarIntros: Record<1 | 2 | 3, string> = {
     1: `These are the energetic signatures encoded in your birth chart — the structural blueprint you came in with. They don't expire, but they can be mastered. What follows are the specific placements creating the most friction for your goal of ${GOAL_LABEL[goal].toLowerCase()}.`,
     2: `These are the slow-moving planetary forces currently transiting your chart — the timing window you are in right now. Each one includes how long it runs, giving you an honest timeline rather than an open-ended question mark.`,
@@ -513,6 +537,48 @@ export function ClientResultsPage() {
             ))}
           </div>
         </div>
+
+        {/* Recommendation: Calendly CTA */}
+        {showCalendlyCTA && (
+          <div className="bg-gradient-to-br from-[#2d2a3e] to-[#1a1828] rounded-2xl shadow-lg p-7 text-white">
+            <p className="text-xs font-bold uppercase tracking-widest text-[#c4a96b] mb-3">
+              Your Recommended Next Step
+            </p>
+            <h2 className="text-xl font-bold mb-3 leading-snug">
+              Your{' '}
+              <span className="text-[#c4a96b]">{finalGrade}-grade</span> result
+              {activePillars.length > 0 && (
+                <> with active pressure in <span className="text-[#c4a96b]">{pillarListText}</span></>
+              )}{' '}
+              has a clear, documented path through it.
+            </h2>
+            <p className="text-sm text-gray-300 leading-relaxed mb-4">
+              The Pheydrus team has worked with hundreds of students carrying the exact pattern
+              configurations showing in your report. For clients with active pressure across{' '}
+              {pillarListText || 'multiple pillars'}, we implement targeted methods that directly
+              address each layer — structural, timing, and environmental — through a precision
+              process built around your exact chart, transits, and location.
+            </p>
+            <p className="text-sm text-gray-300 leading-relaxed mb-6">
+              This isn't generic coaching. Students who have gone through this process with us
+              have moved out of these exact patterns in{' '}
+              <strong className="text-white">under 90 days</strong> — not by working harder, but
+              by working on the right layer, in the right order, at the right time. Your report
+              tells us exactly where to start.
+            </p>
+            <a
+              href="https://calendly.com/pheydrus_strategy/1-1-alignment-strategy-call-clone-1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-7 py-3.5 bg-[#c4a96b] hover:bg-[#d4b97b] text-[#1a1828] font-bold rounded-xl transition-colors text-sm"
+            >
+              Book Your 1:1 Alignment &amp; Strategy Call →
+            </a>
+            <p className="text-xs text-gray-500 mt-3">
+              Complimentary call · No obligation · Limited spots available
+            </p>
+          </div>
+        )}
 
         {/* Actions */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
