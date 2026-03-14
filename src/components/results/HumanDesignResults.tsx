@@ -75,21 +75,6 @@ function Pill({ label, color }: { label: string; color: string }) {
   );
 }
 
-function InfoCard({ icon, heading, value, body }: {
-  icon: string;
-  heading: string;
-  value: string;
-  body: string;
-}) {
-  return (
-    <div className="bg-white rounded-xl border border-[#e8e0d0] p-4">
-      <p className={LABEL}>{icon} {heading}</p>
-      <p className={VALUE}>{value}</p>
-      <p className={`${BODY} mt-2`}>{body}</p>
-    </div>
-  );
-}
-
 function GateRow({ planet, gate, line, side }: {
   planet: string;
   gate: number;

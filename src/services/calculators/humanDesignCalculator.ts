@@ -28,8 +28,6 @@ const HD_PLANETS = [
   'True Node', // North Node
 ] as const;
 
-type HDPlanet = (typeof HD_PLANETS)[number];
-
 /**
  * Get gate/line positions for all HD planets at a given Julian Day.
  * Also adds South Node (True Node + 180°).
