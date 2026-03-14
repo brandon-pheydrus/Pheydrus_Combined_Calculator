@@ -409,10 +409,10 @@ const HOUSE_BRIEF: Partial<Record<number, string>> = {
   1: 'identity and self-presentation',
   2: 'income and financial security',
   5: 'romance and creative expression',
-  6: 'work and daily productivity',
-  7: 'partnership and one-on-one relationships',
-  8: 'shared resources and transformation',
-  10: 'career, reputation, and public standing',
+  6: 'work, daily productivity, and money',
+  7: 'committed relationships and marriage',
+  8: 'shared resources, money, and transformation',
+  10: 'career, money, reputation, and public standing',
   11: 'networks, goals, and community',
 };
 

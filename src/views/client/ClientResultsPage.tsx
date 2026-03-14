@@ -442,16 +442,19 @@ export function ClientResultsPage() {
                     num: 1, pct: p1pct, color: 'border-l-red-500', badge: 'bg-red-100 text-red-800',
                     title: 'Structure',
                     text: "Your birth chart's permanent energetic architecture. This layer does not expire — malefic placements here are lifelong structural pressures that can be mastered but not removed.",
+                    pathText: 'A combination of 1:1 calls and self-study are well-suited for deconditioning patterns in this pillar.',
                   },
                   {
                     num: 2, pct: p2pct, color: 'border-l-amber-400', badge: 'bg-amber-100 text-amber-800',
                     title: 'Timing',
                     text: 'Slow-moving outer planets currently transiting specific areas of your chart. This layer is temporary but powerful while active — knowing when it lifts gives you an honest timeline.',
+                    pathText: 'A combination of 1:1 calls and self-study are well-suited for deconditioning patterns in this pillar.',
                   },
                   {
                     num: 3, pct: p3pct, color: 'border-l-[#9a7d4e]', badge: 'bg-[#f0ebe0] text-[#78643a]',
                     title: 'Environment',
                     text: 'This is Pheydrus\' "secret sauce" — your current location and home address carry an energetic signature that can neutralize or offset the negative effects of both Pillar 1 and Pillar 2 when properly aligned. Of the three layers, Pillar 3 is the most immediately actionable.',
+                    pathText: 'A combination of Done-For-You, 1:1 calls, and self-study are suited for reorganizing internal energies and curing external energies.',
                   },
                 ].map((d) => (
                   <div key={d.num} className={`border-l-4 ${d.color} bg-gray-50 rounded-r-lg p-3`}>
@@ -467,7 +470,7 @@ export function ClientResultsPage() {
                     <p className="text-xs text-[#4a4560] leading-relaxed mb-1.5">{d.text}</p>
                     {prefLabel && (
                       <p className="text-xs text-[#9a7d4e] italic">
-                        Recommended path: <strong>{prefLabel}</strong> is well-suited for deconditioning this pillar.
+                        Recommended path: {d.pathText}
                       </p>
                     )}
                   </div>

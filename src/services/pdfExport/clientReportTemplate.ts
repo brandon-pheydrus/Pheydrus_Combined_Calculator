@@ -304,14 +304,17 @@ function renderPage1(results: ConsolidatedResults, intake: ClientIntakeData, goa
     {
       pct: p1pct, color: '#ef4444', badge: 'PILLAR 1', label: 'Structure',
       text: `Your birth chart's permanent energetic architecture. This layer does not expire — malefic placements here are lifelong structural pressures that can be mastered but not removed.`,
+      pathText: 'A combination of 1:1 calls and self-study are well-suited for deconditioning patterns in this pillar.',
     },
     {
       pct: p2pct, color: '#f59e0b', badge: 'PILLAR 2', label: 'Timing',
       text: `Slow-moving outer planets currently transiting specific areas of your chart. This layer is temporary but powerful while active — knowing when it lifts gives you an honest timeline for your situation.`,
+      pathText: 'A combination of 1:1 calls and self-study are well-suited for deconditioning patterns in this pillar.',
     },
     {
       pct: p3pct, color: '#9a7d4e', badge: 'PILLAR 3', label: 'Environment',
       text: p3SecretSauce,
+      pathText: 'A combination of Done-For-You, 1:1 calls, and self-study are suited for reorganizing internal energies and curing external energies.',
     },
   ];
 
@@ -371,7 +374,7 @@ function renderPage1(results: ConsolidatedResults, intake: ClientIntakeData, goa
       <div style="padding:10px 12px;border:1px solid #e5e7eb;border-radius:8px;border-left:3px solid ${d.color};background:#fff;">
         <div style="font-size:11px;font-weight:700;color:${d.color};margin-bottom:3px;font-family:Arial,sans-serif;">${d.badge} — ${d.label} <span style="font-size:16px;font-weight:900;float:right;color:${d.color};">${d.pct}%</span></div>
         <p style="margin:0 0 5px;font-size:11px;color:#4a4560;line-height:1.6;font-family:Arial,sans-serif;">${d.text}</p>
-        ${prefLabel ? `<p style="margin:0;font-size:10px;color:#9a7d4e;font-style:italic;font-family:Arial,sans-serif;">Recommended path: <strong>${esc(prefLabel)}</strong> is well-suited for deconditioning the patterns in this pillar.</p>` : ''}
+        ${prefLabel ? `<p style="margin:0;font-size:10px;color:#9a7d4e;font-style:italic;font-family:Arial,sans-serif;">Recommended path: ${esc(d.pathText)}</p>` : ''}
       </div>`).join('')}
     </div>
   </div>
