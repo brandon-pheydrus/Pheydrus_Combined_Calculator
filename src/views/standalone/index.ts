@@ -7,3 +7,4 @@ export { NatalChartPage } from './NatalChartPage';
 export { RelocationPage } from './RelocationPage';
 export { FengShuiPage } from './FengShuiPage';
 export { AstrocartographyPage } from './AstrocartographyPage';
+export { BusinessEnergyBlueprintPage } from './BusinessEnergyBlueprintPage';

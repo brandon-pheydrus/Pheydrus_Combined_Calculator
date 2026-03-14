@@ -7,3 +7,4 @@ export { RelocationResults } from './RelocationResults';
 export { AddressNumerologyResults } from './AddressNumerologyResults';
 export { NavigationButtons } from './NavigationButtons';
 export { AstrocartographyResults } from './AstrocartographyResults';
+export { HumanDesignResults } from './HumanDesignResults';

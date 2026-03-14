@@ -18,6 +18,7 @@ import {
   RelocationPage,
   FengShuiPage,
   AstrocartographyPage,
+  BusinessEnergyBlueprintPage,
 } from './views/standalone';
 import './App.css';
 
@@ -45,6 +46,7 @@ function App() {
         <Route path="relocation" element={<RelocationPage />} />
         <Route path="feng-shui" element={<FengShuiPage />} />
         <Route path="astrocartography" element={<AstrocartographyPage />} />
+        <Route path="pheydrus-HD" element={<BusinessEnergyBlueprintPage />} />
       </Routes>
     </BrowserRouter>
   );

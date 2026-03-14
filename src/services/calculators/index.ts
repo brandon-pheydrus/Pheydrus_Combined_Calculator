@@ -33,6 +33,12 @@ export {
   validateAstrocartographyInput,
 } from './astrocartographyCalculator';
 
+// Human Design Calculator
+export {
+  calculateHumanDesign,
+  validateHumanDesignInput,
+} from './humanDesignCalculator';
+
 // Re-export types
 export type {
   TransitsInput,
@@ -47,4 +53,6 @@ export type {
   AddressNumerologyResult,
   AstrocartographyInput,
   AstrocartographyResult,
+  HumanDesignInput,
+  HumanDesignResult,
 } from '../../models/calculators';
