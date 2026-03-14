@@ -28,7 +28,8 @@ export interface GateLine {
  * Gate 41 starts at 0° Aries; each gate = 5.625°; each line = 0.9375°.
  */
 export function longitudeToGateLine(longitude: number): GateLine {
-  const adjusted = ((longitude % 360) + 360) % 360;
+  // +1.875° calibration offset aligns gate 41 to 0° Aries per the HD wheel spec
+  const adjusted = (((longitude + 1.875) % 360) + 360) % 360;
   const gateIndex = Math.floor(adjusted / 5.625);
   const gate = GATE_SEQUENCE[gateIndex % 64];
   const remainder = adjusted - gateIndex * 5.625;
